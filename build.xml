@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!-- note, this build file references extensions to ant for compiling
+     C# and C/C++. To avoid exceptions copy the two files:
+       Assign2/lib/cpptasks.jar
+       Assign2/lib/ant-dotnet-1.0.jar
+     to Ant's lib directory. -->
+<project name="Cst420 sample build file for assignment 2."
+         default="targets" basedir="."
+         xmlns:dn="antlib:org.apache.ant.dotnet"
+         xmlns="antlib:org.apache.tools.ant"
+         xmlns:cpptasks="antlib:net.sf.antcontrib.cpptasks">
+
+    <property name="src.dir" value="src"/>
+    <property name="program" value="Library"/>
+    <property name="build" value="./classes"/>
+    <property name="lib" value="./lib"/>
+    <property environment="env"/>
+    <property name="user" value="${env.USERNAME}"/>
+    <property name="port" value="9090"/>
+    <property name="clientPort" value="2020"/>
+    <property name="host" value="localhost"/>
+    <property name="name" value="MediaLibraryApp"/>
+
+    <path id="compile.classpath">
+        <pathelement location="${build}"/>
+        <pathelement path="${lib}/MediaLibraryGui.jar"/>
+    </path>
+
+    <target name="targets">
+        <echo message="Targets are clean, prepare, build, buildjava, buildobjc, javaclient, objcclient, server, and targets"/>
+        <echo message="basedir is: ${basedir}"/>
+        <echo message="os is: ${os.name}"/>
+        <echo message=" "/>
+        <echo message="Sample usage for target server:"/>
+        <echo message="ant server (uses default port of 9090)"/>
+        <echo message="ant server -Dport=9091 (starts server that listens on port 9091)"/>
+        <echo message=" "/>
+        <echo message="Sample usage for target javaclient:"/>
+        <echo message="ant javaclient (uses default name of 'MediaLibraryApp', tries to connect to a server on localhost at port 9090, and listens on 2020 for callbacks)"/>
+        <echo message="ant javaclient -Dname=Library -Dhost=localhost -Dport=9091 -DclientPort=2021 (uses name of Library, tries to connect to a server on localhost at port 9091 and listens on 2021 for callbacks."/>
+        <echo message=" "/>
+        <echo message="Sample usage for target objcclient:"/>
+        <echo message="ant objcclient (uses default name of 'MediaLibraryApp', tries to connect to a server on localhost at port 9090, and listens on 2020 for callbacks)"/>
+        <echo message="ant objcclient -Dname=Library -Dhost=localhost -Dport=9091 -DclientPort=2021 (uses name of Library, tries to connect to a server on localhost at port 9091 and listens on 2021 for callbacks."/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}" failonerror="false"/>
+        <exec executable="make">
+            <arg value="clean" />
+        </exec>
+    </target>
+
+    <target name="build" depends="prepare"
+            description="Compile the Java and Objective-C sources">
+        <javac srcdir="${src.dir}"
+               destdir="${build}">
+            <classpath refid="compile.classpath"/>
+        </javac>
+        <exec executable="make" />
+    </target>
+
+    <target name="buildjava" depends="prepare"
+            description="Compile Java sources">
+        <javac srcdir="${src.dir}"
+               destdir="${build}">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+
+    <target name="buildobjc" description="Compile Objective-C sources">
+        <exec executable="make" />
+    </target>
+
+    <target name="server" depends="buildjava" description="Start Media Server">
+        <java classname="cst420.assign2.server.MediaLibraryServer" fork="yes">
+            <classpath refid="compile.classpath"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
+            <arg value="${port}"/>
+        </java>
+    </target>
+
+    <target name="javaclient" depends="buildjava" description="Start Media App">
+        <java classname="cst420.assign2.client.MediaLibraryApp" fork="yes">
+            <classpath refid="compile.classpath"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
+            <arg value="${name}"/>
+            <arg value="${host}"/>
+            <arg value="${port}"/>
+            <arg value="${clientPort}"/>
+        </java>
+    </target>
+
+    <target name="objcclient" depends="buildobjc" description="Start Media App">
+        <exec executable="openapp">
+            <arg value="./MediaLibraryApp.app"/>
+            <arg value="${name}"/>
+            <arg value="${host}"/>
+            <arg value="${port}"/>
+            <arg value="${clientPort}" />
+        </exec>
+    </target>
+
+</project>
+
