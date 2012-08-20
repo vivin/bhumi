@@ -1,6 +1,6 @@
 #import "Bug.h"
 
-@implementation
+@implementation Bug
 
 - (id) init {
     self = [super init];
@@ -16,7 +16,8 @@
 
 - (id) initWithWorld: (World*) aWorld
                 name: (NSString*) aName
-               layer: (NSString*) aLayer {
+               layer: (NSString*) aLayer
+           sleepTime: (long) aSleepTime {
     
     if((self = [super init])) {
         [world autorelease];
@@ -29,8 +30,11 @@
         layer = [aLayerKey retain];
         x = -1;
         y = -1;
-        
+
+        sleepTime = aSleepTime;
         alive = true;
+
+        bugThread = [[BugThread alloc] initWithBug: self];
     }
 
     return self;
@@ -52,6 +56,10 @@
     return layer;
 }
 
+- (long) sleepTime {
+    return sleepTime;
+}
+
 - (void) setName: (NSString*) aName {
     [name autorelease];
     name = [aName retain];
@@ -71,12 +79,40 @@
     return y;
 }
 
+- (void) stop {
+    [bugThread cancel];
+}
+
+- (void) stopped {
+    BOOL stopped = false;
+
+    if(bugThread != nil) {
+        stopped = ![bugThread isExecution];
+    }
+
+    return stopped;
+}
+
 - (BOOL) alive {
     return alive;
 }
 
 - (void) kill {
     alive = false;
+    if([bugThread isExecuting]) {
+        [bugThread cancel];
+        [bugThread release];
+    }
+}
+
+- (void) act {
+    if(bugThread == nil) {
+        bugThread = [[BugThread alloc] initWithBug: self];
+    }
+
+    if(![bugThread isExecuting]) {
+        [bugThread start];
+    }
 }
 
 @end

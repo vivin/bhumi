@@ -5,9 +5,16 @@
 
 - (void) act {
 
+    [super act];
+
     long rows = [world rows];
     long columns = [world columns];
 
-    x = arc4random() % columns;
-    y = arc4random() % rows;
+    do {
+        long originalX = x;
+        long originalY = y;
+
+        x = arc4random() % columns;
+        y = arc4random() % rows;
+    } while(![[bug world] moveBug: [bug layer] fromX: originalX fromY: originalY toLayer: [bug layer] toX: [bug x] toY: [bug y]]);
 }
