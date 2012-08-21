@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <NSMutableArray+Shuffle.h>
 #include <stdlib.h>
 
 @interface World : NSObject {
@@ -7,14 +8,14 @@
     NSString *name;
 
     NSMutableDictionary *grid; //Keyed by layer->list of rows->list of columns->bug
-    NSMutableDictionary *bugs; //Keyed by layer->list of bugs
+    NSMutableDictionary *layerBugDictionary; //Keyed by layer->list of bugs
+    NSMutableArray *bugs;   //Array of all bugs 
 
     long rows;
     long columns;
 
     long iterations; //How many iterations we're running the simulation
-    long intervalsPerIteration; //The number of intervals per iteration
-    long interval; //Logging interval. Every <interval> ms, we capture a snapshot of the world.
+    long snapshotInterval; //Generate a snapshot every <snapshotInterval> iterations
 
     BOOL running;
 }
@@ -25,8 +26,6 @@
            columns: (long) columns;
 
 - (void) addBug: (Bug*) bug;
-- (void) addBug: (Bug*) bug
-       andStart: (BOOL) start;
 
 - (void) removeBug: (Bug*) aBug;
 - (void) removeBug: (NSString*) inLayer
