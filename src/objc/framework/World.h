@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
-#import <NSMutableArray+Shuffle.h>
+#import "NSMutableArray+Shuffle.h"
+#import "Bug.h"
 #include <stdlib.h>
 
 @interface World : NSObject {
@@ -11,50 +12,55 @@
     NSMutableDictionary *layerBugDictionary; //Keyed by layer->list of bugs
     NSMutableArray *bugs;   //Array of all bugs 
 
-    long rows;
-    long columns;
+    int rows;
+    int columns;
 
-    long iterations; //How many iterations we're running the simulation
-    long snapshotInterval; //Generate a snapshot every <snapshotInterval> iterations
+    int iterations; //How many iterations we're running the simulation
+    int snapshotInterval; //Generate a snapshot every <snapshotInterval> iterations
 
     BOOL running;
 }
 
 - (id) init;
-- (id) initWithName: (NSString*) name
-              rows: (long) rows
-           columns: (long) columns;
+- (id) initWithName: (NSString*) aName
+               rows: (int) aRows
+            columns: (int) aColumns
+         iterations: (int) anIterations
+   snapshotInterval: (int) aSnapshotInterval;
 
 - (void) addBug: (Bug*) bug;
 
 - (void) removeBug: (Bug*) aBug;
 - (void) removeBug: (NSString*) inLayer
-                 x: (long) x
-                 y: (long) y;
-
+                 x: (int) x
+                 y: (int) y;
+- (Bug*) getBug: (NSString*) inLayer
+              x: (int) x
+              y: (int) y;
 - (BOOL) moveBug: (NSString*) fromLayer
-           fromX: (long) fromX
-           fromY: (long) fromY
+           fromX: (int) fromX
+           fromY: (int) fromY
          toLayer: (NSString*) toLayer
-             toX: (long) toX 
-             toY: (long) toY;
+             toX: (int) toX 
+             toY: (int) toY;
 
 - (NSArray*) bugs: (NSString*) inLayer;
-- (long) numberOfBugs: (NSString*) inLayer;
-- (NSArray*) layerKeys;
+- (int) numberOfBugs: (NSString*) inLayer;
+- (NSArray*) layers;
+- (int) rows;
+- (int) columns;
 
 - (BOOL) isOccupied: (NSString*) inLayer
-                  x: (long) x
-                  y: (long) y;
-- (BOOL) isOccupied: (long) x
-                  y: (long) y;
+                  x: (int) x
+                  y: (int) y;
+- (BOOL) isOccupied: (int) x
+                  y: (int) y;
 
 - (BOOL) isRunning;
 
-- (void) clear: (NSString*) inLayer;
+- (void) clearLayer: (NSString*) layer;
 - (void) clear;
 
 - (void) start;
-- (void) stop;
 
 @end

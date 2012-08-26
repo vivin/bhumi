@@ -9,6 +9,7 @@
         name = @"";
         grid = [[NSMutableDictionary alloc] init];
         layerBugDictionary = [[NSMutableDictionary alloc] init]; 
+        bugs = [[NSMutableArray alloc] init];
         rows = 0;
         columns = 0;
     }
@@ -17,8 +18,10 @@
 }
 
 - (id) initWithName: (NSString*) aName
-               rows: (long) aRows
-            columns: (long) aColumns {
+               rows: (int) aRows
+            columns: (int) aColumns 
+         iterations: (int) anIterations
+   snapshotInterval: (int) aSnapshotInterval {
 
    if((self = [super init])) {
        [self init];
@@ -28,6 +31,8 @@
 
        rows = aRows;
        columns = aColumns;
+       iterations = anIterations;
+       snapshotInterval = aSnapshotInterval;
    }
 
    return self;
@@ -35,10 +40,11 @@
 
 - (void) addBug: (Bug*) aBug {
 
-    [aBug retain];
+    printf("adding bug\n");
+
     NSString* layer = [aBug layer];
 
-    long numberOfBugs = 0;
+    int numberOfBugs = 0;
     if([layerBugDictionary objectForKey: layer] == nil) {
         [layerBugDictionary setObject: [NSMutableArray array] forKey: layer];
     } else {
@@ -51,8 +57,8 @@
        [[layerBugDictionary objectForKey: layer] addObject: aBug];
     }
 
-    long x = [aBug x];
-    long y = [aBug y];
+    int x = [aBug x];
+    int y = [aBug y];
 
     if([aBug x] == -1) {
         x = arc4random() % columns;
@@ -62,32 +68,37 @@
         y = arc4random() % rows;
     }
 
+    //arc4random is returning negative numbers for some strange reason
+    y = (y < 0) ? y * -1 : y;
+    x = (x < 0) ? x * -1 : x;
+
     if([self isOccupied: layer x: x y: y]) {
+        printf("need to find new spot because %i,%i is occupied\n", x, y);
         //That location is already occupied. Let's look for the first non-occupied location.
 
         NSMutableDictionary* gridColumns = [grid objectForKey: layer];
-        BOOL columnFound = false;
-        BOOL rowFound = false;
-        long i = 0;
+        BOOL columnFound = NO;
+        BOOL rowFound = NO;
+        int i = 0;
         while(i < columns && !columnFound) {
 
-            NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithLong: i]]
+            NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: i]];
             if(gridRows == nil) {
                 //If the rows entry for this column is null, we don't need to search any further since
                 //it means that we don't have any layerBugDictionary in this column
                 x = i;
                 y = 0;
-                columnFound = true;
-                rowFound = true;
+                columnFound = YES;
+                rowFound = YES;
             } else {
                 //If the column entry is not null, we need to start looking at each row entry in this column.
                 //Each entry here translates to a cell in the grid.
-                long j = 0;
+                int j = 0;
                 while(j < rows && !rowFound) {
-                    if([gridRows objectForKey: [NSNumber numberWithLong: j]] == nil) {
+                    if([gridRows objectForKey: [NSNumber numberWithInt: j]] == nil) {
                         y = j;
-                        columnFound = true;
-                        rowFound = true;
+                        columnFound = YES;
+                        rowFound = YES;
                     }
 
                     j++;
@@ -97,13 +108,13 @@
             i++;
         }
 
-        //This should always hold true, or something is seriously wrong. We should never be in a situation
+        //This should always hold YES, or something is seriously wrong. We should never be in a situation
         //where we can't find a place to add a new bug because we check to see beforehand if we have enough
         //room in this layer
-        NSAssert(rowFound && columnFound);
+        NSAssert(rowFound && columnFound, @"There must be enough room to add a new bug");
     }
 
-    [aBug setX: x setY: y];
+    [aBug setX: x Y: y];
 
     //Mark the location in the grid as occupied
     if([grid objectForKey: layer] == nil) {
@@ -111,16 +122,16 @@
     }
 
     NSMutableDictionary* gridColumns = [grid objectForKey: layer];
-    if([gridColumns objectForKey: [NSNumber numberWithLong: x]] == nil) {
-        [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [NSNumber numberWithLong: x]];
+    if([gridColumns objectForKey: [NSNumber numberWithInt: x]] == nil) {
+        [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [NSNumber numberWithInt: x]];
     }
 
-    NSMutableDictionary* gridRows = [gridRows objectForKey: [NSNumber numberWithLong: x]];
-    if([gridRows objectForKey: [NSNumber numberWithLong: y]] == nil) {
-        [gridRows setObject: aBug forKey: [NSNumber numberWithLong: y]];
+    NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: x]];
+    if([gridRows objectForKey: [NSNumber numberWithInt: y]] == nil) {
+        [gridRows setObject: aBug forKey: [NSNumber numberWithInt: y]];
     }
 
-    [bugs addObject: bug];
+    [bugs addObject: aBug];
 }
 
 - (void) removeBug: (Bug*) aBug {
@@ -128,19 +139,19 @@
 }
 
 - (void) removeBug: (NSString*) inLayer
-                 x: (long) x
-                 y: (long) y {
+                 x: (int) x
+                 y: (int) y {
 
     if([self isOccupied: inLayer x: x y: y]) {
-        Bug* bug = [[[grid objectForKey: layer] objectForKey: [NSNumber numberWithLong: x]] objectForKey: [NSNumber numberWithLong: y]];
+        Bug* bug = [[[grid objectForKey: inLayer] objectForKey: [NSNumber numberWithInt: x]] objectForKey: [NSNumber numberWithInt: y]];
         [bug kill]; 
 
-        [[[grid objectForKey: layer] objectForKey: [NSNumber numberWithLong: x]] setObject: nil forKey: [NSNumber numberWithLong: y]];
+        [[[grid objectForKey: inLayer] objectForKey: [NSNumber numberWithInt: x]] removeObjectForKey: [NSNumber numberWithInt: y]];
 
         NSMutableArray* bugsInLayer = [layerBugDictionary objectForKey: inLayer];
-        NSEnumerator* bugEnumuerator = [bugsInLayer objectEnumerator];
+        NSEnumerator* bugEnumerator = [bugsInLayer objectEnumerator];
         Bug* aBug;
-        BOOL found = false;
+        BOOL found = NO;
         int i = 0;
 
         while((aBug = [bugEnumerator nextObject]) && !found) {
@@ -149,31 +160,43 @@
         }
 
         //We must always find the bug we are looking for!
-        NSAssert(found);
+        NSAssert(found, @"We must have been able to find the bug we are looking for");
 
         [bugsInLayer removeObjectAtIndex: i--];
-        [bug release];
     }
 }
 
-- (BOOL) moveBug: (NSString*) fromLayer
-           fromX: (long) fromX
-           fromY: (long) fromY
-         toLayer: (NSString*) toLayer 
-             toX: (long) toX
-             toY: (long) toY {
+- (Bug*) getBug: (NSString*) inLayer
+              x: (int) x
+              y: (int) y {
 
-    BOOL success = false;
+    Bug* bug = nil;
+
+    if([self isOccupied: inLayer x: x y: y]) {
+        bug = [[[grid objectForKey: inLayer] objectForKey: [NSNumber numberWithInt: x]] objectForKey: [NSNumber numberWithInt: y]];
+    }
+
+    return bug;
+}
+
+- (BOOL) moveBug: (NSString*) fromLayer
+           fromX: (int) fromX
+           fromY: (int) fromY
+         toLayer: (NSString*) toLayer 
+             toX: (int) toX
+             toY: (int) toY {
+
+    BOOL success = NO;
 
     if(![self isOccupied: toLayer x: toX y: toY]) {
 
-        Bug* bug = [[[grid objectForKey: fromLayer] objectForKey: [NSNumber numberWithLong: fromX]] objectForKey: [NSNumber numberWithLong: fromY]];
-        
+        Bug* bug = [[[grid objectForKey: fromLayer] objectForKey: [NSNumber numberWithInt: fromX]] objectForKey: [NSNumber numberWithInt: fromY]];
+
         if(![toLayer isEqualToString: fromLayer]) {
             NSMutableArray* bugsInLayer = [layerBugDictionary objectForKey: fromLayer];
-            NSEnumerator* bugEnumuerator = [bugsInLayer objectEnumerator];
+            NSEnumerator* bugEnumerator = [bugsInLayer objectEnumerator];
             Bug* aBug;
-            BOOL found = false;
+            BOOL found = NO;
             int i = 0;
 
             while((aBug = [bugEnumerator nextObject]) && !found) {
@@ -182,23 +205,39 @@
             }
 
             //We must always find the bug we are looking for!
-            NSAssert(found);
+            NSAssert(found, @"We must have been able to find the bug we are looking for");
 
             [bugsInLayer removeObjectAtIndex: i--];
             [[layerBugDictionary objectForKey: toLayer] addObject: bug];
         }
 
-        [[[grid objectForKey: fromLayer] objectForKey: [NSNumber numberWithLong: fromX]] setObject: nil forKey: [NSNumber numberWithLong: fromY]];
-        [[[grid objectForKey: toLayer] objectForKey: [NSNumber numberWithLong: toX]] setObject: bug forKey: [NSNumber numberWithLong: toY]];
+        [[[grid objectForKey: fromLayer] objectForKey: [NSNumber numberWithInt: fromX]] removeObjectForKey: [NSNumber numberWithInt: fromY]];
+
+        //Mark the new location in the grid as occupied
+        if([grid objectForKey: toLayer] == nil) {
+            [grid setObject: [[NSMutableDictionary alloc] init] forKey: toLayer];
+        }
+
+        NSMutableDictionary* gridColumns = [grid objectForKey: toLayer];
+        if([gridColumns objectForKey: [NSNumber numberWithInt: toX]] == nil) {
+            [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [NSNumber numberWithInt: toX]];
+        }
+
+        NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: toX]];
+        [gridRows setObject: bug forKey: [NSNumber numberWithInt: toY]];
+
+        success = YES;
     }
+
+    return success;
 }
 
-- (NSArray*) layerBugDictionary: (NSString*) inLayer {
+- (NSArray*) bugs: (NSString*) inLayer {
     return [layerBugDictionary objectForKey: inLayer];
 }
 
-- (long) numberOfBugs: (NSString*) inLayer {
-    long numberOfBugs = 0;
+- (int) numberOfBugs: (NSString*) inLayer {
+    int numberOfBugs = 0;
 
     if([layerBugDictionary objectForKey: inLayer] != nil) {
         numberOfBugs = [[layerBugDictionary objectForKey: inLayer] count];
@@ -208,110 +247,142 @@
 }
 
 - (NSArray*) layers {
-    return [layerBugDictionary: allKeys];
+    return [layerBugDictionary allKeys];
+}
+
+- (int) rows {
+    return rows;
+}
+
+- (int) columns {
+    return columns;
 }
 
 - (BOOL) isOccupied: (NSString*) inLayer
-                  x: (long) x
-                  y: (long) y {
-    BOOL occupied = false;
+                  x: (int) x
+                  y: (int) y {
+    BOOL occupied = NO;
 
-    NSMutableDictionary* gridColumns = [grid objectForKey: layer];
+    NSMutableDictionary* gridColumns = [grid objectForKey: inLayer];
 
     if(gridColumns != nil) {
-        NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithLong: x]];
+        NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: x]];
 
         if(gridRows != nil) {
-            Bug* bug = [gridRows objectForKey: [NSNumber numberWithLong: y]];
-            occupied = (bug != nil);
+            Bug* bug = [gridRows objectForKey: [NSNumber numberWithInt: y]];
+
+            if(bug != nil) {
+                occupied = YES;
+            } 
         }
     }
+
 
     return occupied;
 }
 
-- (BOOL) isOccupied: (long) x
-                  y: (long) y {
+- (BOOL) isOccupied: (int) x
+                  y: (int) y {
 
     NSEnumerator* enumerator = [grid keyEnumerator];
     id key;
-    BOOL occupied = false;
+    BOOL occupied = NO;
  
     while((key = [enumerator nextObject]) && !occupied) {
        occupied = [self isOccupied: key x: x y: y];
     }
+
+    return occupied;
 }
 
 - (BOOL) isRunning {
     return running;
 }
 
-- (BOOL) clear: (NSString*) inLayer {
+- (void) clearLayer: (NSString*) layer {
+
+    [[layerBugDictionary objectForKey: layer] release];
+    [layerBugDictionary removeObjectForKey: layer];
+
     NSMutableDictionary* gridColumns = [grid objectForKey: layer];
+    [gridColumns release];
 
-    if(gridColumns != nil) {
-        NSEnumerator* xEnumerator [gridColumns keyEnumerator];
-        NSNumber* x;
+    [grid removeObjectForKey: layer];
+}
 
-        while((x = [xEnumerator nextObject])) {
-            NSMutableDictionary *gridRows = [gridColumns objectForKey: x];
-            NSEnumerator *yEnumator = [gridRows keyEnumerator];
-            NSNumber* y;
+- (void) clear {
+    [grid removeAllObjects];
+    [layerBugDictionary removeAllObjects];
+    [bugs removeAllObjects];
+}
 
-            while((y = [yEnumerator nextObject])) {
-                [self removeBug: inLayer x: x y: y];
+- (void) start {
+
+    int iteration = 0;
+
+    while(iteration < iterations) {
+        
+        printf("Iteration %i of %i\n", iteration + 1, iterations);
+        
+        [bugs shuffle];
+
+        NSEnumerator* bugEnumerator = [bugs objectEnumerator];
+        Bug* bug;
+
+        NSString* bugLayer = @"FirstLayer";
+
+        while((bug = [bugEnumerator nextObject])) {
+            NSString* originalLayer = [bug layer];
+            int originalX = [bug x];
+            int originalY = [bug y];
+
+            [bug act];
+
+            if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
+                [self moveBug: originalLayer fromX: originalX fromY: originalY toLayer: [bug layer] toX: [bug x] toY: [bug y]];
             }
         }
 
-        NSMutableArray* bugsInLayer = [layerBugDictionary objectForKey: layer];
-        NSEnumerator* bugEnumuerator = [bugsInLayer objectEnumerator];
-        Bug* aBug;
+        if(iteration % snapshotInterval == 0) {
 
-        while((aBug = [bugEnumerator nextObject])) {
-            [aBug kill];
+            int i = 0;
+            int j = 0;
+            int k = 0;
+
+            for(i = 0; i < rows; i++) {
+
+                for(k = 0; k < columns; k++) {
+                    printf("+---");
+                    if(k == columns - 1) {
+                        printf("+");
+                    }
+                }
+
+                printf("\n");
+
+                for(j = 0; j < columns; j++) {
+                    if([self isOccupied: bugLayer x: j y: i]) {
+                        printf("| X ");
+                    } else {
+                        printf("|   ");
+                    }
+
+                    if(j == columns - 1) {
+                        printf("|\n");
+                    }
+                }
+            } 
+
+            for(k = 0; k < columns; k++) {
+                printf("+---");
+                if(k == columns - 1) {
+                    printf("+");
+                }
+            }
         }
-    }
-}
 
-- (BOOL) clear: (NSString*) inLayer {
-    NSMutableDictionary* enumerator = [grid keyEnumerator];
-    id key;
-
-    while((key = [enumerator nextObject])) {
-        [self clear: key];
-    }
-}
-
-//TODO: fix this 
-- (void) start {
-    NSEnumerator* enumerator = [layerBugDictionary keyEnumerator];
-    NSString* layer;
-
-    while((layer = [enumerator nextObject])) {
-        NSMutableArray* bugsInLayer = [layerBugDictionary objectForKey: layer];
-        NSEnumerator* bugEnumuerator = [bugsInLayer objectEnumerator];
-        Bug* aBug;
-
-        while((aBug = [bugEnumerator nextObject])) {
-            [aBug act];
-        }
-    }
-}
-
-
-//TODO: fix this
-- (void) stop {
-    NSEnumerator* enumerator = [layerBugDictionary keyEnumerator];
-    NSString* layer;
-
-    while((layer = [enumerator nextObject])) {
-        NSMutableArray* bugsInLayer = [layerBugDictionary objectForKey: layer];
-        NSEnumerator* bugEnumuerator = [bugsInLayer objectEnumerator];
-        Bug* aBug;
-
-        while((aBug = [bugEnumerator nextObject])) {
-            [aBug stop];
-        }
+        iteration++;
+        printf("\n");
     }
 }
 

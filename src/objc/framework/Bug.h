@@ -1,39 +1,32 @@
 #import <Foundation/Foundation.h>
-#import "World.h"
-#import "BugThread.h"
+#import "BugProtocol.h"
+@class World;
 
-@interface Bug : NSObject {
+@interface Bug : NSObject <BugProtocol> {
 
-    @private
+    @protected
     World* world;
     NSString* name;
     NSString* layer;
-    BugThread* bugThread;
-    long x;
-    long y;
-    long sleepTime;
+    int x;
+    int y;
     BOOL alive;
 }
 
 - (id) initWithWorld: (World*) aWorld
                 name: (NSString*) aName
-               layer: (NSString*) aLayer
-           sleepTime: (long) aSleepTime;
+               layer: (NSString*) aLayer;
+
 - (World*) world;
 - (NSString*) name;
 - (NSString*) layer;
-- (void) setName: (NSString*) aName;
-- (void) setX: (long) anX
-            Y: (long) aY;
-- (void) setSleepTime: (long) aSleepTime;
-- (long) x;
-- (long) y;
-- (long) sleepTime;
-- (void) stopped;
-- (void) stop;
+- (int) x;
+- (int) y;
 - (BOOL) alive;
+
+- (void) setName: (NSString*) aName;
+- (void) setX: (int) anX
+            Y: (int) aY;
 - (void) kill;
 
 @end
-
-- 

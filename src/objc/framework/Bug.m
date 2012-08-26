@@ -10,14 +10,15 @@
         layer = @"";
         x = -1;
         y = -1;
-        alive = true;
+        alive = YES;
     }
+
+    return self;
 }
 
 - (id) initWithWorld: (World*) aWorld
                 name: (NSString*) aName
-               layer: (NSString*) aLayer
-           sleepTime: (long) aSleepTime {
+               layer: (NSString*) aLayer {
     
     if((self = [super init])) {
         [world autorelease];
@@ -27,14 +28,11 @@
         name = [aName retain];
 
         [layer autorelease];
-        layer = [aLayerKey retain];
+        layer = [aLayer retain];
         x = -1;
         y = -1;
 
-        sleepTime = aSleepTime;
-        alive = true;
-
-        bugThread = [[BugThread alloc] initWithBug: self];
+        alive = YES;
     }
 
     return self;
@@ -56,41 +54,23 @@
     return layer;
 }
 
-- (long) sleepTime {
-    return sleepTime;
-}
-
 - (void) setName: (NSString*) aName {
     [name autorelease];
     name = [aName retain];
 }
 
-- (void) setX: (long) anX
-         setY: (long) aY {
+- (void) setX: (int) anX
+            Y: (int) aY {
     x = anX;
     y = aY;
 }
 
-- (long) x {
+- (int) x {
     return x;
 }
 
-- (long) y {
+- (int) y {
     return y;
-}
-
-- (void) stop {
-    [bugThread cancel];
-}
-
-- (void) stopped {
-    BOOL stopped = false;
-
-    if(bugThread != nil) {
-        stopped = ![bugThread isExecution];
-    }
-
-    return stopped;
 }
 
 - (BOOL) alive {
@@ -98,21 +78,10 @@
 }
 
 - (void) kill {
-    alive = false;
-    if([bugThread isExecuting]) {
-        [bugThread cancel];
-        [bugThread release];
-    }
+    alive = NO;
 }
 
 - (void) act {
-    if(bugThread == nil) {
-        bugThread = [[BugThread alloc] initWithBug: self];
-    }
-
-    if(![bugThread isExecuting]) {
-        [bugThread start];
-    }
 }
 
-@end
+@end 
