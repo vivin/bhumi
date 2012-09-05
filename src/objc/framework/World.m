@@ -1,4 +1,6 @@
 #include "World.h"
+#include <stdlib.h>
+#include <time.h>
 
 @implementation World
 
@@ -12,6 +14,9 @@
         bugs = [[NSMutableArray alloc] init];
         rows = 0;
         columns = 0;
+        currentIteration = 0;
+        iterations = 0;
+        snapshotInterval = 0;
     }
 
     return self;
@@ -21,7 +26,8 @@
                rows: (int) aRows
             columns: (int) aColumns 
          iterations: (int) anIterations
-   snapshotInterval: (int) aSnapshotInterval {
+   snapshotInterval: (int) aSnapshotInterval
+    serializerClass: (Class) seralizerClass {
 
    if((self = [super init])) {
        [self init];
@@ -31,6 +37,7 @@
 
        rows = aRows;
        columns = aColumns;
+       currentIteration = 0;
        iterations = anIterations;
        snapshotInterval = aSnapshotInterval;
    }
@@ -40,7 +47,7 @@
 
 - (void) addBug: (Bug*) aBug {
 
-    printf("adding bug\n");
+    srand(time(0));
 
     NSString* layer = [aBug layer];
 
@@ -61,19 +68,14 @@
     int y = [aBug y];
 
     if([aBug x] == -1) {
-        x = arc4random() % columns;
+        x = rand() % columns;
     }
 
     if([aBug y] == -1) {
-        y = arc4random() % rows;
+        y = rand() % rows;
     }
 
-    //arc4random is returning negative numbers for some strange reason
-    y = (y < 0) ? y * -1 : y;
-    x = (x < 0) ? x * -1 : x;
-
     if([self isOccupied: layer x: x y: y]) {
-        printf("need to find new spot because %i,%i is occupied\n", x, y);
         //That location is already occupied. Let's look for the first non-occupied location.
 
         NSMutableDictionary* gridColumns = [grid objectForKey: layer];
@@ -232,6 +234,10 @@
     return success;
 }
 
+- (NSArray*) bugs {
+    return bugs;
+}
+
 - (NSArray*) bugs: (NSString*) inLayer {
     return [layerBugDictionary objectForKey: inLayer];
 }
@@ -256,6 +262,22 @@
 
 - (int) columns {
     return columns;
+}
+
+- (int) iterations {
+    return iterations;
+}
+
+- (int) currentIteration {
+    return currentIteration;
+}
+
+- (int) snapshotInterval {
+    return snapshotInterval;
+}
+
+- (NSString*) name {
+    return name;
 }
 
 - (BOOL) isOccupied: (NSString*) inLayer
@@ -318,11 +340,9 @@
 
 - (void) start {
 
-    int iteration = 0;
-
-    while(iteration < iterations) {
+    while(currentIteration < iterations) {
         
-        printf("Iteration %i of %i\n", iteration + 1, iterations);
+        printf("Iteration %i of %i\n", currentIteration + 1, iterations);
         
         [bugs shuffle];
 
@@ -343,7 +363,7 @@
             }
         }
 
-        if(iteration % snapshotInterval == 0) {
+        if(currentIteration % snapshotInterval == 0) {
 
             int i = 0;
             int j = 0;
@@ -381,7 +401,7 @@
             }
         }
 
-        iteration++;
+        currentIteration++;
         printf("\n");
     }
 }

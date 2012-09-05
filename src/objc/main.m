@@ -1,8 +1,9 @@
 #include <stdio.h>
 #import <Cocoa/Cocoa.h>
 #import "framework/World.h"
+#import "framework/WorldJsonSerializer.h"
 #import "domain/RandomBug.h"
-
+#import "domain/RandomBugJsonSerializer.h"
 
 int main(void) {
  
@@ -12,16 +13,19 @@ int main(void) {
                                           rows: 10
                                        columns: 10
                                     iterations: 100
-                              snapshotInterval: 1];
-   
+                              snapshotInterval: 1
+                               serializerClass: [WorldJsonSerializer class]];
+
 
     Bug* randomBug = [[RandomBug alloc] initWithWorld: world
                                                  name: @"RandomBug"
-                                                layer: @"FirstLayer"];
+                                                layer: @"FirstLayer"
+                                      serializerClass: [RandomBugJsonSerializer class]];
 
     Bug* randomBug2 = [[RandomBug alloc] initWithWorld: world
                                                   name: @"RandomBug"
-                                                 layer: @"FirstLayer"];
+                                                 layer: @"FirstLayer"
+                                       serializerClass: [RandomBugJsonSerializer class]];
 
     [world addBug: randomBug];
     [world addBug: randomBug2];

@@ -1,6 +1,9 @@
 #import <Foundation/Foundation.h>
 #import "BugProtocol.h"
+#import "ToStringSerializerProtocol.h"
+
 @class World;
+@class BugToStringSerializer;
 
 @interface Bug : NSObject <BugProtocol> {
 
@@ -11,11 +14,13 @@
     int x;
     int y;
     BOOL alive;
+    BugToStringSerializer* toStringSerializer;
 }
 
 - (id) initWithWorld: (World*) aWorld
                 name: (NSString*) aName
-               layer: (NSString*) aLayer;
+               layer: (NSString*) aLayer
+     serializerClass: (Class) serializerClass;
 
 - (World*) world;
 - (NSString*) name;

@@ -1,20 +1,20 @@
 #import "RandomBug.h"
 #import "../framework/World.h"
 #include <stdlib.h>
+#include <time.h>
 
 @implementation RandomBug
 
 - (void) act {
+    srand(time(0));
+
     int rows = [world rows];
     int columns = [world columns];
 
     do {
-        x = arc4random() % columns;
-        y = arc4random() % rows;
+        x = rand() % columns;
+        y = rand() % rows;
 
-        //arc4random is returning negative numbers for some strange reason
-        y = (y < 0) ? y * -1 : y;
-        x = (x < 0) ? x * -1 : x;
     } while([world isOccupied: layer x: x y: y]);
 }
 

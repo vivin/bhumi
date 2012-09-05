@@ -18,7 +18,8 @@
 
 - (id) initWithWorld: (World*) aWorld
                 name: (NSString*) aName
-               layer: (NSString*) aLayer {
+               layer: (NSString*) aLayer
+     serializerClass: (Class) serializerClass {
     
     if((self = [super init])) {
         [world autorelease];
@@ -33,6 +34,16 @@
         y = -1;
 
         alive = YES;
+
+        if([serializerClass isKindOfClass: [BugToStringSerializer class]]) {
+            toStringSerializer = [[serializerClass alloc] initWithBug: self];
+
+            if([toStringSerializer serializerType] != [self class]) {
+                [NSException raise:@"Serializer type must match type of bug!" format:@"Serializer type must match type of bug!"];
+            }
+        } else {
+            [NSException raise:@"Serializer class is expected to be a subtype of BugToStringSerializer!" format:@"Serializer class is expected to be a subtype BugToStringSerializer!"];
+        }
     }
 
     return self;
@@ -82,6 +93,11 @@
 }
 
 - (void) act {
+    [NSException raise:NSInternalInconsistencyException format:@"You must override %@ in a subclass", NSStringFromSelector(_cmd)];
+}
+
+- (NSString*) serializeToString {
+    return @"";
 }
 
 @end 

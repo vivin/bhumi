@@ -1,7 +1,10 @@
 #import <Foundation/Foundation.h>
+#include <stdlib.h>
 #import "NSMutableArray+Shuffle.h"
 #import "Bug.h"
-#include <stdlib.h>
+#import "ToStringSerializerProtocol.h"
+
+@class WorldToStringSerializer;
 
 @interface World : NSObject {
 
@@ -15,10 +18,13 @@
     int rows;
     int columns;
 
+    int currentIteration; //The current iteration
     int iterations; //How many iterations we're running the simulation
     int snapshotInterval; //Generate a snapshot every <snapshotInterval> iterations
 
     BOOL running;
+
+    WorldToStringSerializer* toStringSerializer;
 }
 
 - (id) init;
@@ -26,7 +32,8 @@
                rows: (int) aRows
             columns: (int) aColumns
          iterations: (int) anIterations
-   snapshotInterval: (int) aSnapshotInterval;
+   snapshotInterval: (int) aSnapshotInterval
+    serializerClass: (Class) serializerClass;
 
 - (void) addBug: (Bug*) bug;
 
@@ -44,11 +51,16 @@
              toX: (int) toX 
              toY: (int) toY;
 
+- (NSArray*) bugs;
 - (NSArray*) bugs: (NSString*) inLayer;
 - (int) numberOfBugs: (NSString*) inLayer;
 - (NSArray*) layers;
+- (NSString*) name;
 - (int) rows;
 - (int) columns;
+- (int) iterations;
+- (int) currentIteration;
+- (int) snapshotInterval;
 
 - (BOOL) isOccupied: (NSString*) inLayer
                   x: (int) x
