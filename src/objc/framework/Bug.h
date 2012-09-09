@@ -28,6 +28,7 @@
 - (int) x;
 - (int) y;
 - (BOOL) alive;
+- (BugToStringSerializer*) toStringSerializer;
 
 - (void) setName: (NSString*) aName;
 - (void) setX: (int) anX

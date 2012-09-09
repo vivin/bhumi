@@ -1,4 +1,5 @@
 #import "Bug.h"
+#import "BugToStringSerializer.h"
 
 @implementation Bug
 
@@ -35,11 +36,12 @@
 
         alive = YES;
 
-        if([serializerClass isKindOfClass: [BugToStringSerializer class]]) {
-            toStringSerializer = [[serializerClass alloc] initWithBug: self];
+        toStringSerializer = [[serializerClass alloc] initWithBug: self];
 
+        if([toStringSerializer isKindOfClass: [BugToStringSerializer class]]) {
+            
             if([toStringSerializer serializerType] != [self class]) {
-                [NSException raise:@"Serializer type must match type of bug!" format:@"Serializer type must match type of bug!"];
+                [NSException raise:@"Serializer format must match format of bug!" format:@"Serializer format must match format of bug!"];
             }
         } else {
             [NSException raise:@"Serializer class is expected to be a subtype of BugToStringSerializer!" format:@"Serializer class is expected to be a subtype BugToStringSerializer!"];
@@ -88,6 +90,10 @@
     return alive;
 }
 
+- (BugToStringSerializer*) toStringSerializer {
+    return toStringSerializer;
+}
+
 - (void) kill {
     alive = NO;
 }
@@ -97,7 +103,7 @@
 }
 
 - (NSString*) serializeToString {
-    return @"";
+    return [toStringSerializer serializeToString];
 }
 
 @end 

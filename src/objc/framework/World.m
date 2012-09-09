@@ -1,4 +1,5 @@
 #include "World.h"
+#import "WorldToStringSerializer.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -27,7 +28,7 @@
             columns: (int) aColumns 
          iterations: (int) anIterations
    snapshotInterval: (int) aSnapshotInterval
-    serializerClass: (Class) seralizerClass {
+    serializerClass: (Class) serializerClass {
 
    if((self = [super init])) {
        [self init];
@@ -40,6 +41,16 @@
        currentIteration = 0;
        iterations = anIterations;
        snapshotInterval = aSnapshotInterval;
+       toStringSerializer = [[serializerClass alloc] initWithWorld: self];
+
+       if([toStringSerializer isKindOfClass: [WorldToStringSerializer class]]) {
+           
+           if([toStringSerializer serializerType] != [self class]) {
+               [NSException raise:@"Serializer format must match format of world!" format:@"Serializer format must match format of world!"];
+           }
+       } else {
+           [NSException raise:@"Serializer class is expected to be a subtype of WorldToStringSerializer!" format:@"Serializer class is expected to be a subtype WorldToStringSerializer!"];
+       }
    }
 
    return self;
@@ -47,7 +58,9 @@
 
 - (void) addBug: (Bug*) aBug {
 
-    srand(time(0));
+    if([[aBug toStringSerializer] serializerFormat] != [toStringSerializer serializerFormat]) {
+        [NSException raise:@"Serializer format of bug must match format of world!" format:@"Serializer format must match format of world!"];
+    }
 
     NSString* layer = [aBug layer];
 
@@ -68,11 +81,13 @@
     int y = [aBug y];
 
     if([aBug x] == -1) {
-        x = rand() % columns;
+        x = arc4random() % columns;
+        x = (x < 0) ? x * -1 : x;
     }
 
     if([aBug y] == -1) {
-        y = rand() % rows;
+        y = arc4random() % rows;
+        y = (y < 0) ? y * -1 : y;
     }
 
     if([self isOccupied: layer x: x y: y]) {
@@ -340,9 +355,10 @@
 
 - (void) start {
 
+    
     while(currentIteration < iterations) {
         
-        printf("Iteration %i of %i\n", currentIteration + 1, iterations);
+        //printf("Iteration %i of %i\n", currentIteration + 1, iterations);
         
         [bugs shuffle];
 
@@ -365,10 +381,15 @@
 
         if(currentIteration % snapshotInterval == 0) {
 
+            printf("%s", [[toStringSerializer serializeToString] UTF8String]);   
+
+            /*
+             
             int i = 0;
             int j = 0;
             int k = 0;
 
+            
             for(i = 0; i < rows; i++) {
 
                 for(k = 0; k < columns; k++) {
@@ -398,12 +419,12 @@
                 if(k == columns - 1) {
                     printf("+");
                 }
-            }
-        }
+            } */
+        } 
 
         currentIteration++;
-        printf("\n");
-    }
+        //printf("\n"); 
+    } 
 }
 
 @end

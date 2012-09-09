@@ -10,20 +10,20 @@ int main(void) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 
     World* world = [[World alloc] initWithName: @"Bhumi"
-                                          rows: 10
-                                       columns: 10
+                                          rows: 100
+                                       columns: 100
                                     iterations: 100
                               snapshotInterval: 1
                                serializerClass: [WorldJsonSerializer class]];
 
 
     Bug* randomBug = [[RandomBug alloc] initWithWorld: world
-                                                 name: @"RandomBug"
+                                                 name: @"RandomBug0"
                                                 layer: @"FirstLayer"
                                       serializerClass: [RandomBugJsonSerializer class]];
 
     Bug* randomBug2 = [[RandomBug alloc] initWithWorld: world
-                                                  name: @"RandomBug"
+                                                  name: @"RandomBug2"
                                                  layer: @"FirstLayer"
                                        serializerClass: [RandomBugJsonSerializer class]];
 
