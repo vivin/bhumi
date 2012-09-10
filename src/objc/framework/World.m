@@ -90,7 +90,7 @@
         y = (y < 0) ? y * -1 : y;
     }
 
-    if([self isOccupied: layer x: x y: y]) {
+    if([self isOccupied: layer x: x y: y] == YES) {
         //NSLog(@"Bug %@ could not be put in random location %i:%i", [aBug name], x, y);
         //That location is already occupied. Let's look for the first non-occupied location.
         
@@ -100,7 +100,7 @@
 
         while(i < columns && !found) {
             while(j < rows && !found) {
-                if(![self isOccupied: layer x: i y: j]) {
+                if([self isOccupied: layer x: i y: j] == YES) {
                     found = YES;
                     x = i;
                     y = j;
@@ -185,7 +185,7 @@
                  x: (int) x
                  y: (int) y {
 
-    if([self isOccupied: inLayer x: x y: y]) {
+    if([self isOccupied: inLayer x: x y: y] == YES) {
         Bug* bug = [[[grid objectForKey: inLayer] objectForKey: [NSNumber numberWithInt: x]] objectForKey: [NSNumber numberWithInt: y]];
         [bug kill]; 
 
@@ -215,7 +215,7 @@
 
     Bug* bug = nil;
 
-    if([self isOccupied: inLayer x: x y: y]) {
+    if([self isOccupied: inLayer x: x y: y] == YES) {
         bug = [[[grid objectForKey: inLayer] objectForKey: [NSNumber numberWithInt: x]] objectForKey: [NSNumber numberWithInt: y]];
     }
 
@@ -227,7 +227,7 @@
 
     NSMutableArray* bugsAtLocation = [[NSMutableArray alloc] init];
 
-    if([self isOccupied: x y: y]) {
+    if([self isOccupied: x y: y] == YES) {
         NSArray* allLayers = [self layers];
         NSEnumerator* layerEnumerator = [allLayers objectEnumerator];
         NSString* layer;
@@ -255,7 +255,7 @@
 
     BOOL success = NO;
 
-    if(![self isOccupied: toLayer x: toX y: toY]) {
+    if([self isOccupied: toLayer x: toX y: toY] == YES) {
 
         //NSLog(@"Location is not occupied!");
 
@@ -352,6 +352,7 @@
 - (BOOL) isOccupied: (NSString*) inLayer
                   x: (int) x
                   y: (int) y {
+
     BOOL occupied = NO;
 
     //NSLog(@"Checking occupancy of %@:%i:%i", inLayer, x, y);
@@ -491,7 +492,7 @@
         //[innerPool drain];
     } 
 
-    NSLog(@"Done.");
+    //NSLog(@"Done.");
 }
 
 @end

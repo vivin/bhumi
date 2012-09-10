@@ -47,17 +47,18 @@ var BhumiRenderer = (function() {
         }
 
         var colors = ["rgb(150, 29, 28)", "rgb(29, 150, 28)"];
+
+        var index = 0;
         var iteration = 0;
-        var it = 0;
 
         var intervalId = setInterval(function() {
-            if(iteration == world.iterations) {
+            if(index == world.snapshots.length) {
                 clearInterval(intervalId);
             } else {
-                jQuery("#iterationDiv").text("Iteration: " + it);
+                jQuery("#iterationDiv").text("Iteration: " + iteration);
                 clear(world, canvas);
 
-                var snapshot = world.snapshots[iteration];
+                var snapshot = world.snapshots[index];
 
                 for(var layer in snapshot.layers) if(snapshot.layers.hasOwnProperty(layer)) {
                     var bugs = snapshot.layers[layer];
@@ -68,11 +69,11 @@ var BhumiRenderer = (function() {
                     }
                 }
 
-                iteration++;
-                it += world.snapshotInterval;
+                index++;
+                iteration += world.snapshotInterval;
             }
 
-        }, 50);
+        }, 250);
 
         clear(world, canvas);
     }
