@@ -44,6 +44,10 @@
 - (Bug*) getBug: (NSString*) inLayer
               x: (int) x
               y: (int) y;
+
+- (NSArray*) getBugs: (int) x
+                   y: (int) y;
+ 
 - (BOOL) moveBug: (NSString*) fromLayer
            fromX: (int) fromX
            fromY: (int) fromY

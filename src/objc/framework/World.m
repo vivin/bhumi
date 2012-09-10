@@ -72,7 +72,7 @@
     }
 
     if(numberOfBugs == (rows * columns)) {
-       [NSException raise:@"Layer is full! Cannot add more layerBugDictionary!" format:@"The %s layer is full! Cannot add more layerBugDictionary", layer];
+       [NSException raise:@"Layer is full! Cannot add more bugs!" format:@"The %s layer is full! Cannot add more bugs", layer];
     } else {
        [[layerBugDictionary objectForKey: layer] addObject: aBug];
     }
@@ -91,8 +91,28 @@
     }
 
     if([self isOccupied: layer x: x y: y]) {
+        //NSLog(@"Bug %@ could not be put in random location %i:%i", [aBug name], x, y);
         //That location is already occupied. Let's look for the first non-occupied location.
+        
+        int i = 0;
+        int j = 0;
+        BOOL found = NO;
 
+        while(i < columns && !found) {
+            while(j < rows && !found) {
+                if(![self isOccupied: layer x: i y: j]) {
+                    found = YES;
+                    x = i;
+                    y = j;
+                }
+
+                j++;
+            }
+
+            i++;
+        }
+
+        /*
         NSMutableDictionary* gridColumns = [grid objectForKey: layer];
         BOOL columnFound = NO;
         BOOL rowFound = NO;
@@ -123,29 +143,35 @@
             }
 
             i++;
-        }
+        }*/
 
-        //This should always hold YES, or something is seriously wrong. We should never be in a situation
-        //where we can't find a place to add a new bug because we check to see beforehand if we have enough
-        //room in this layer
-        NSAssert(rowFound && columnFound, @"There must be enough room to add a new bug");
+        //NSLog(@"Found new location for Bug %@ at %i:%i", [aBug name], x, y);
+        //NSLog(@"This location is %@", [self isOccupied: layer x: x y: y] ? @"occupied" :  @"not occupied");
+    } else {
+        //NSLog(@"Bug %@ was put in random location %i:%i", [aBug name], x, y);
     }
 
     [aBug setX: x Y: y];
 
     //Mark the location in the grid as occupied
     if([grid objectForKey: layer] == nil) {
+        //NSLog(@"Bug %@: layer %@ was empty so creating new dict", [aBug name], layer);
         [grid setObject: [[NSMutableDictionary alloc] init] forKey: layer];
     }
 
     NSMutableDictionary* gridColumns = [grid objectForKey: layer];
     if([gridColumns objectForKey: [NSNumber numberWithInt: x]] == nil) {
+        //NSLog(@"Bug %@: column %i was empty so creating new dict", [aBug name], [aBug x]);
         [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [NSNumber numberWithInt: x]];
     }
 
     NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: x]];
     if([gridRows objectForKey: [NSNumber numberWithInt: y]] == nil) {
+        //NSLog(@"Bug %@: row %i (%i) was empty as it should be so setting bug at that location", [aBug name], [aBug y], y);
         [gridRows setObject: aBug forKey: [NSNumber numberWithInt: y]];
+
+        //NSLog(@"Location is %@", [gridRows objectForKey: [NSNumber numberWithInt: y]] == nil ? @"nil" : @"not nil");
+        //NSLog(@"%@:%i:%i is %@", layer, x, y, [self isOccupied: layer x: x y: y] ? @"occupied" : @"not occupied");
     }
 
     [bugs addObject: aBug];
@@ -196,6 +222,28 @@
     return bug;
 }
 
+- (NSArray*) getBugs: (int) x
+                   y: (int) y {
+
+    NSMutableArray* bugsAtLocation = [[NSMutableArray alloc] init];
+
+    if([self isOccupied: x y: y]) {
+        NSArray* allLayers = [self layers];
+        NSEnumerator* layerEnumerator = [allLayers objectEnumerator];
+        NSString* layer;
+
+        while((layer = [layerEnumerator nextObject])) {
+            Bug* bug = [self getBug: layer x: x y: y];
+
+            if(bug != nil) {
+                [bugsAtLocation addObject: bug];
+            }
+        }
+    }
+
+    return [bugsAtLocation autorelease];
+}
+
 - (BOOL) moveBug: (NSString*) fromLayer
            fromX: (int) fromX
            fromY: (int) fromY
@@ -203,11 +251,17 @@
              toX: (int) toX
              toY: (int) toY {
 
+    //NSLog(@"Moving bug from %@:%i:%i to %@:%i:%i", fromLayer, fromX, fromY, toLayer, toX, toY);
+
     BOOL success = NO;
 
     if(![self isOccupied: toLayer x: toX y: toY]) {
 
+        //NSLog(@"Location is not occupied!");
+
         Bug* bug = [[[grid objectForKey: fromLayer] objectForKey: [NSNumber numberWithInt: fromX]] objectForKey: [NSNumber numberWithInt: fromY]];
+
+        NSAssert(bug != nil, @"Bug must not be nil!!");
 
         if(![toLayer isEqualToString: fromLayer]) {
             NSMutableArray* bugsInLayer = [layerBugDictionary objectForKey: fromLayer];
@@ -300,20 +354,26 @@
                   y: (int) y {
     BOOL occupied = NO;
 
+    //NSLog(@"Checking occupancy of %@:%i:%i", inLayer, x, y);
+
     NSMutableDictionary* gridColumns = [grid objectForKey: inLayer];
 
     if(gridColumns != nil) {
+        //NSLog(@"Something is in the layer");
+
         NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: x]];
 
         if(gridRows != nil) {
+            //NSLog(@"Something is in the rows");
+
             Bug* bug = [gridRows objectForKey: [NSNumber numberWithInt: y]];
 
             if(bug != nil) {
+                //NSLog(@"Something is in that cell");
                 occupied = YES;
             } 
         }
     }
-
 
     return occupied;
 }
@@ -355,8 +415,9 @@
 
 - (void) start {
 
-    
     while(currentIteration < iterations) {
+
+        //NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
         
         //printf("Iteration %i of %i\n", currentIteration + 1, iterations);
         
@@ -365,17 +426,19 @@
         NSEnumerator* bugEnumerator = [bugs objectEnumerator];
         Bug* bug;
 
-        NSString* bugLayer = @"FirstLayer";
-
         while((bug = [bugEnumerator nextObject])) {
             NSString* originalLayer = [bug layer];
             int originalX = [bug x];
             int originalY = [bug y];
 
+            //NSLog(@"Bug %@ is going to act and location %i:%i is %@", [bug name], [bug x], [bug y], [self isOccupied: [bug layer] x: [bug x] y: [bug y]] ? @"occupied" : @"not occupied");
             [bug act];
+            //NSLog(@"Bug has acted");
 
             if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
+                //NSLog(@"Bug has moved");
                 [self moveBug: originalLayer fromX: originalX fromY: originalY toLayer: [bug layer] toX: [bug x] toY: [bug y]];
+                //NSLog(@"Updated bug position");
             }
         }
 
@@ -424,7 +487,11 @@
 
         currentIteration++;
         //printf("\n"); 
+        //
+        //[innerPool drain];
     } 
+
+    NSLog(@"Done.");
 }
 
 @end

@@ -48,10 +48,13 @@ var BhumiRenderer = (function() {
 
         var colors = ["rgb(150, 29, 28)", "rgb(29, 150, 28)"];
         var iteration = 0;
+        var it = 0;
+
         var intervalId = setInterval(function() {
             if(iteration == world.iterations) {
                 clearInterval(intervalId);
             } else {
+                jQuery("#iterationDiv").text("Iteration: " + it);
                 clear(world, canvas);
 
                 var snapshot = world.snapshots[iteration];
@@ -60,14 +63,16 @@ var BhumiRenderer = (function() {
                     var bugs = snapshot.layers[layer];
 
                     for(var i = 0; i < bugs.length; i++) {
-                        drawBug(world, canvas, bugs[i], colors[i]);
+                        var color = bugs[i].infected ? colors[0] : colors[1];
+                        drawBug(world, canvas, bugs[i], color);
                     }
                 }
 
                 iteration++;
+                it += world.snapshotInterval;
             }
 
-        }, 250);
+        }, 50);
 
         clear(world, canvas);
     }

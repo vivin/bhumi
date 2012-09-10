@@ -63,8 +63,12 @@
             i++;
         }
 
+        [bugEnumerator release];
+
         [json appendString: @"]"];
     }
+
+    [layerEnumerator release];
 
     [json appendString: @"}}"];
 
