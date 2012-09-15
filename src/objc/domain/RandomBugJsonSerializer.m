@@ -30,7 +30,7 @@
     [json appendString: [[NSNumber numberWithInt: [bug y]] stringValue]];
     [json appendString: @"}"];
 
-    return json;
+    return [json autorelease];
 }
 
 @end

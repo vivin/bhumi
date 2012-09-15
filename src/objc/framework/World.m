@@ -418,8 +418,8 @@
 
     while(currentIteration < iterations) {
 
-        //NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
-        
+//        NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
+               
         //printf("Iteration %i of %i\n", currentIteration + 1, iterations);
         
         [bugs shuffle];
@@ -433,7 +433,9 @@
             int originalY = [bug y];
 
             //NSLog(@"Bug %@ is going to act and location %i:%i is %@", [bug name], [bug x], [bug y], [self isOccupied: [bug layer] x: [bug x] y: [bug y]] ? @"occupied" : @"not occupied");
+            //NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
             [bug act];
+            //[innerPool drain];
             //NSLog(@"Bug has acted");
 
             if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
@@ -446,7 +448,6 @@
         if(currentIteration % snapshotInterval == 0) {
 
             printf("%s", [[toStringSerializer serializeToString] UTF8String]);   
-
             /*
              
             int i = 0;
@@ -489,7 +490,7 @@
         currentIteration++;
         //printf("\n"); 
         //
-        //[innerPool drain];
+//        [innerPool drain];
     } 
 
     //NSLog(@"Done.");

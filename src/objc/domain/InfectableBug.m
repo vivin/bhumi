@@ -35,7 +35,7 @@ infectionStartIteration: (int) anInfectionStartIteration
 
 - (void) act {
 
-    NSAutoreleasePool *actPool = [[NSAutoreleasePool alloc] init];
+//    NSAutoreleasePool *actPool = [[NSAutoreleasePool alloc] init];
 
     int rows = [world rows];
     int columns = [world columns];
@@ -76,7 +76,7 @@ infectionStartIteration: (int) anInfectionStartIteration
 
     } while([world isOccupied: layer x: x y: y]); 
 
-    [actPool drain];
+//    [actPool drain];
 }
 
 - (NSArray*) scan {

@@ -15,16 +15,38 @@
     return JSON;
 }
 
-- (NSString*) serializeToString {
-    NSMutableString* json = [NSMutableString stringWithString: @""];
+- (NSString*) serializeToString { 
 
+    NSString* format = {
+        @"    {"
+        @"        \"name\": \"%s\",\n"
+        @"        \"alive\": \"%s\",\n"
+        @"        \"infected\": \"%s\",\n"
+        @"        \"incubationPeriod\": \"%d\",\n"
+        @"        \"infectionRadius\": \"%d\",\n"
+        @"        \"x\": \"%d\",\n"
+        @"        \"y\": \"%d\"\n"
+        @"    }"
+    };
+/*
+    NSString* json = [
+        NSString stringWithFormat: format,
+        [bug name],
+        [bug infected] == YES ? @"true" : @"false",
+        [bug incubationPeriod],
+        [bug infectionRadius],
+        [bug x],
+        [bug y]
+    ]; */
+/*
+    NSString* json = [NSMutableString stringWithString: @""];
     [json appendString: @"{\"name\": \""];
     [json appendString: [bug name]];
     [json appendString: @"\",\n"];
     [json appendString: @"\"alive\": "];
     [json appendString: [bug alive] == YES ? @"true,\n" : @"false,\n"];
     [json appendString: @"\"infected\": "];
-    [json appendString: [bug infected] == YES ? @"true,\n" : @"false,\n"];
+        [json appendString: [bug infected] == YES ? @"true,\n" : @"false,\n"];
     [json appendString: @"\"incubationPeriod\": "];
     [json appendString: [[NSNumber numberWithInt: [bug incubationPeriod]] stringValue]];
     [json appendString: @",\n"];
@@ -36,9 +58,19 @@
     [json appendString: @",\n"];
     [json appendString: @"\"y\": "];
     [json appendString: [[NSNumber numberWithInt: [bug y]] stringValue]];
-    [json appendString: @"}"];
+    [json appendString: @"}"]; 
+  */  
+    //return [format autorelease];
 
-    return json;
+
+    return [[NSString stringWithFormat: format, 
+               [[bug name] UTF8String], 
+               [bug alive] == YES ? @"true" : @"false", 
+               [bug infected] == YES ? @"true" : @"false", 
+               [bug incubationPeriod],
+               [bug infectionRadius],
+               [bug x],
+               [bug y]] autorelease];
 }
 
 @end
