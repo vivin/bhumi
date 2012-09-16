@@ -2,37 +2,47 @@
 #import "BugProtocol.h"
 #import "ToStringSerializerProtocol.h"
 
-@class World;
 @class BugToStringSerializer;
+@class World;
 
-@interface Bug : NSObject <BugProtocol> {
+@interface Bug : NSObject <BugProtocol>
 
-    @protected
-    World* world;
-    NSString* name;
-    NSString* layer;
-    int x;
-    int y;
-    BOOL alive;
-    BugToStringSerializer* toStringSerializer;
-}
+    @property(readonly) World* world;
+    @property NSString* name;
+    @property NSString* layer;
+    @property NSUInteger x;
+    @property NSUInteger y;
+    @property BOOL alive;
+    @property(readonly) BOOL isPlaced;
+    @property(readonly) BugToStringSerializer *toStringSerializer;
 
-- (id) initWithWorld: (World*) aWorld
-                name: (NSString*) aName
-               layer: (NSString*) aLayer
++ (id) objectWithWorld: (World *) world
+                  name: (NSString *) name
+                 layer: (NSString *) layer
+                     x: (NSUInteger) x
+                     y: (NSUInteger) y
+       serializerClass: (Class) serializerClass;
+
+- (id) initWithWorld: (World *) world
+                name: (NSString *) name
+               layer: (NSString *) layer
+                   x: (NSUInteger) x
+                   y: (NSUInteger) y
      serializerClass: (Class) serializerClass;
 
-- (World*) world;
-- (NSString*) name;
-- (NSString*) layer;
-- (int) x;
-- (int) y;
-- (BOOL) alive;
-- (BugToStringSerializer*) toStringSerializer;
+- (id) initWithWorld: (World *) aWorld
+                name: (NSString *) aName
+               layer: (NSString *) aLayer
+     serializerClass: (Class) serializerClass;
 
-- (void) setName: (NSString*) aName;
-- (void) setX: (int) anX
-            Y: (int) aY;
++ (id) objectWithWorld: (World *) aWorld
+                  name: (NSString *) aName
+                 layer: (NSString *) aLayer
+       serializerClass: (Class) serializerClass;
+
+- (void) setX: (NSUInteger) anX
+            Y: (NSUInteger) aY;
+
 - (void) kill;
 
 @end

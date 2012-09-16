@@ -1,6 +1,5 @@
 #import "InfectableBugJsonSerializer.h"
 #import "../framework/Bug.h"
-#import "../framework/SerializerFormat.h"
 #import "InfectableBug.h"
 
 @class InfectableBug;
@@ -18,7 +17,7 @@
 - (NSString*) serializeToString { 
 
     NSString* format = {
-        @"    {"
+        @"    {\n"
         @"        \"name\": \"%s\",\n"
         @"        \"alive\": \"%s\",\n"
         @"        \"infected\": \"%s\",\n"
@@ -63,14 +62,14 @@
     //return [format autorelease];
 
 
-    return [[NSString stringWithFormat: format, 
-               [[bug name] UTF8String], 
-               [bug alive] == YES ? @"true" : @"false", 
-               [bug infected] == YES ? @"true" : @"false", 
-               [bug incubationPeriod],
-               [bug infectionRadius],
-               [bug x],
-               [bug y]] autorelease];
+    return [NSString stringWithFormat: format,
+              [[self.bug name] UTF8String],
+              [self.bug alive] == YES ? [[NSString stringWithString: @"true"] UTF8String] : [[NSString stringWithString: @"false"] UTF8String],
+              [(InfectableBug *) self.bug infected] == YES ? [[NSString stringWithString: @"true"] UTF8String] : [[NSString stringWithString: @"false"] UTF8String],
+                    [(InfectableBug *) self.bug incubationPeriod],
+                    [(InfectableBug *) self.bug infectionRadius],
+                    [self.bug x],
+                    [self.bug y]];
 }
 
 @end

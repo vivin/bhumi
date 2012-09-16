@@ -1,7 +1,5 @@
 #import "ToStringSerializerProtocol.h"
 #import "WorldToStringSerializer.h"
 
-@interface WorldJsonSerializer : WorldToStringSerializer {
-}
-
+@interface WorldJsonSerializer : WorldToStringSerializer
 @end

@@ -19,18 +19,18 @@
     NSMutableString* json = [NSMutableString stringWithString: @""];
     
     [json appendString: @"{\"name\": \""];
-    [json appendString: [bug name]];
+    [json appendString: [self.bug name]];
     [json appendString: @"\",\n"];
     [json appendString: @"\"alive\": "];
-    [json appendString: [bug alive] == YES ? @"true,\n" : @"false,\n"];
+    [json appendString: [self.bug alive] == YES ? @"true,\n" : @"false,\n"];
     [json appendString: @"\"x\": "];
-    [json appendString: [[NSNumber numberWithInt: [bug x]] stringValue]];
+    [json appendString: [[NSNumber numberWithInt: [self.bug x]] stringValue]];
     [json appendString: @",\n"];
     [json appendString: @"\"y\": "];
-    [json appendString: [[NSNumber numberWithInt: [bug y]] stringValue]];
+    [json appendString: [[NSNumber numberWithInt: [self.bug y]] stringValue]];
     [json appendString: @"}"];
 
-    return [json autorelease];
+    return json;
 }
 
 @end

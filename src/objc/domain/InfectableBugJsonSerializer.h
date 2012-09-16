@@ -1,7 +1,5 @@
 #import "../framework/ToStringSerializerProtocol.h"
 #import "../framework/BugToStringSerializer.h"
 
-@interface InfectableBugJsonSerializer : BugToStringSerializer {
-}
-
+@interface InfectableBugJsonSerializer : BugToStringSerializer
 @end

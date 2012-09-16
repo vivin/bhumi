@@ -1,12 +1,12 @@
 #import "WorldToStringSerializer.h"
+#import "World.h"
 
 @implementation WorldToStringSerializer
 
 - (id) initWithWorld: (World*) aWorld {
 
     if((self = [super init])) {
-        [world autorelease];
-        world = [aWorld retain];
+        _world = aWorld;
     }
 
     return self;

@@ -1,80 +1,83 @@
 #import <Foundation/Foundation.h>
-#include <stdlib.h>
 #import "NSMutableArray+Shuffle.h"
 #import "Bug.h"
 #import "ToStringSerializerProtocol.h"
 
 @class WorldToStringSerializer;
 
-@interface World : NSObject {
+@interface World : NSObject
 
-    @private
-    NSString *name;
+@property NSString *name;
 
-    NSMutableDictionary *grid; //Keyed by layer->list of rows->list of columns->bug
-    NSMutableDictionary *layerBugDictionary; //Keyed by layer->list of bugs
-    NSMutableArray *bugs;   //Array of all bugs 
+@property(readonly) NSMutableDictionary *grid; //Keyed by layer->list of rows->list of columns->bug
+@property(readonly) NSMutableDictionary *layerBugDictionary; //Keyed by layer->list of bugs
+@property(readonly) NSMutableArray *bugs;   //Array of all bugs
 
-    int rows;
-    int columns;
+@property(readonly) NSUInteger rows;
+@property(readonly) NSUInteger columns;
 
-    int currentIteration; //The current iteration
-    int iterations; //How many iterations we're running the simulation
-    int snapshotInterval; //Generate a snapshot every <snapshotInterval> iterations
+@property(readonly) NSUInteger currentIteration; //The current iteration
+@property NSUInteger iterations; //How many iterations we're running the simulation
+@property NSUInteger snapshotInterval; //Generate a snapshot every <snapshotInterval> iterations
 
-    BOOL running;
+@property(readonly) BOOL running;
 
-    WorldToStringSerializer* toStringSerializer;
-}
+@property(readonly) WorldToStringSerializer *toStringSerializer;
 
 - (id) init;
-- (id) initWithName: (NSString*) aName
-               rows: (int) aRows
-            columns: (int) aColumns
-         iterations: (int) anIterations
-   snapshotInterval: (int) aSnapshotInterval
+
+
+- (id) initWithName: (NSString *) aName
+               rows: (NSUInteger) aRows
+            columns: (NSUInteger) aColumns
+         iterations: (NSUInteger) anIterations
+   snapshotInterval: (NSUInteger) aSnapshotInterval
     serializerClass: (Class) serializerClass;
 
-- (void) addBug: (Bug*) bug;
++ (id) objectWithName: (NSString *) aName
+                 rows: (NSUInteger) aRows
+              columns: (NSUInteger) aColumns
+           iterations: (NSUInteger) anIterations
+     snapshotInterval: (NSUInteger) aSnapshotInterval
+      serializerClass: (Class) serializerClass;
 
-- (void) removeBug: (Bug*) aBug;
-- (void) removeBug: (NSString*) inLayer
-                 x: (int) x
-                 y: (int) y;
-- (Bug*) getBug: (NSString*) inLayer
-              x: (int) x
-              y: (int) y;
+- (void) addBug: (Bug *) bug;
 
-- (NSArray*) getBugs: (int) x
-                   y: (int) y;
- 
-- (BOOL) moveBug: (NSString*) fromLayer
-           fromX: (int) fromX
-           fromY: (int) fromY
-         toLayer: (NSString*) toLayer
-             toX: (int) toX 
-             toY: (int) toY;
+- (void) removeBug: (Bug *) aBug;
 
-- (NSArray*) bugs;
-- (NSArray*) bugs: (NSString*) inLayer;
-- (int) numberOfBugs: (NSString*) inLayer;
-- (NSArray*) layers;
-- (NSString*) name;
-- (int) rows;
-- (int) columns;
-- (int) iterations;
-- (int) currentIteration;
-- (int) snapshotInterval;
+- (void) removeBugInLayer: (NSString *) inLayer
+                      atX: (NSUInteger) atX
+                      atY: (NSUInteger) atY;
 
-- (BOOL) isOccupied: (NSString*) inLayer
-                  x: (int) x
-                  y: (int) y;
-- (BOOL) isOccupied: (int) x
-                  y: (int) y;
+- (Bug *) getBugInLayer: (NSString *) inLayer
+                    atX: (NSUInteger) atX
+                    atY: (NSUInteger) atY;
 
-- (BOOL) isRunning;
+- (NSArray *) getBugsAtX: (NSUInteger) atX
+                     atY: (NSUInteger) atY;
 
-- (void) clearLayer: (NSString*) layer;
+- (BOOL) moveBugFrom: (NSString *) fromLayer
+                 atX: (NSUInteger) fromX
+                 atY: (NSUInteger) fromY
+             toLayer: (NSString *) toLayer
+                 atX: (NSUInteger) toX
+                 atY: (NSUInteger) toY;
+
+- (NSArray *) bugs: (NSString *) inLayer;
+
+- (NSUInteger) numberOfBugs: (NSString *) inLayer;
+
+- (NSArray *) layers;
+
+- (BOOL) isLocationOccupiedInLayer: (NSString *) inLayer
+                               atX: (NSUInteger) atX
+                               atY: (NSUInteger) atY;
+
+- (BOOL) isLocationOccupiedAtX: (NSUInteger) atX
+                           atY: (NSUInteger) atY;
+
+- (void) clearLayer: (NSString *) layer;
+
 - (void) clear;
 
 - (void) start;

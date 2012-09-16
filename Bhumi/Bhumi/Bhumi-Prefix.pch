@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Bhumi' target in the 'Bhumi' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

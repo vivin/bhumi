@@ -10,36 +10,36 @@
 
 - (NSString*) serializeToString {
 
-    int currentIteration = [world currentIteration];
+    NSUInteger currentIteration = [self.world currentIteration];
 
     NSMutableString* json = [NSMutableString stringWithString: @""];
 
     if(currentIteration == 0) {
         [json appendString: @"{\"name\": "];
         [json appendString: @"\""];
-        [json appendString: [[world name] stringByReplacingOccurrencesOfString: @"\"" withString: @"\\\""]];
+        [json appendString: [[self.world name] stringByReplacingOccurrencesOfString: @"\"" withString: @"\\\""]];
         [json appendString: @"\",\n"];
         [json appendString: @"\"iterations\": "];
-        [json appendString: [[NSNumber numberWithInt: [world iterations]] stringValue]];
+        [json appendString: [[NSNumber numberWithInt: [self.world iterations]] stringValue]];
         [json appendString: @",\n"];
         [json appendString: @"\"rows\": "];
-        [json appendString: [[NSNumber numberWithInt: [world rows]] stringValue]];
+        [json appendString: [[NSNumber numberWithInt: [self.world rows]] stringValue]];
         [json appendString: @",\n"];
         [json appendString: @"\"columns\": "];
-        [json appendString: [[NSNumber numberWithInt: [world columns]] stringValue]];
+        [json appendString: [[NSNumber numberWithInt: [self.world columns]] stringValue]];
         [json appendString: @", \n"];
         [json appendString: @"\"snapshotInterval\": "];
-        [json appendString: [[NSNumber numberWithInt: [world snapshotInterval]] stringValue]];
+        [json appendString: [[NSNumber numberWithInt: [self.world snapshotInterval]] stringValue]];
         [json appendString: @", \n"];
         [json appendString: @"\"snapshots\": [\n"];
     }
 
     [json appendString: @"{\"iteration\": "];
-    [json appendString: [[NSNumber numberWithInt: [world currentIteration]] stringValue]];
+    [json appendString: [[NSNumber numberWithInt: [self.world currentIteration]] stringValue]];
     [json appendString: @", \n"];
     [json appendString: @"\"layers\": {\n"];
 
-    NSEnumerator* layerEnumerator = [[world layers] objectEnumerator];
+    NSEnumerator* layerEnumerator = [[self.world layers] objectEnumerator];
     NSString* layer;
 
     while((layer = [layerEnumerator nextObject])) {
@@ -48,11 +48,11 @@
         [json appendString: @"\""];
         [json appendString: @": [\n"];
 
-        NSArray* bugs = [world bugs: layer];
+        NSArray* bugs = [self.world bugs: layer];
         NSEnumerator* bugEnumerator = [bugs objectEnumerator];
         Bug* bug;
 
-        int i = 0;
+        NSUInteger i = 0;
         while((bug = [bugEnumerator nextObject])) {
             [json appendString: [bug serializeToString]];
 
@@ -63,16 +63,12 @@
             i++;
         }
 
-        [bugEnumerator release];
-
         [json appendString: @"]"];
     }
 
-    [layerEnumerator release];
-
     [json appendString: @"}}"];
 
-    if([world currentIteration] + [world snapshotInterval] < [world iterations]) {
+    if([self.world currentIteration] + [self.world snapshotInterval] < [self.world iterations]) {
         [json appendString: @",\n"];
     } else {
         [json appendString: @"\n]}"];

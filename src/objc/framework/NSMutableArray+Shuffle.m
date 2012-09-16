@@ -6,14 +6,10 @@
 
 - (void) shuffle {
 
-    srand(time(0));
-
     NSUInteger count = [self count];
-    NSUInteger i = 0;
-    for(i = 0; i < count; i++) {
-        int nElements = count - i;
-        int n = (rand() % nElements) + i;
-        n = (n < 0) ? n * -1 : n;
+    for(NSUInteger i = 0; i < count; i++) {
+        NSUInteger nElements = count - i;
+        NSUInteger n = (arc4random() % nElements) + i;
         [self exchangeObjectAtIndex: i withObjectAtIndex: n];
     }
 }
