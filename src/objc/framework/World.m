@@ -133,39 +133,6 @@
             i++;
         }
 
-        /*
-        NSMutableDictionary* gridColumns = [grid objectForKey: layer];
-        BOOL columnFound = NO;
-        BOOL rowFound = NO;
-        NSUInteger i = 0;
-        while(i < columns && !columnFound) {
-
-            NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: i]];
-            if(gridRows == nil) {
-                //If the rows entry for this column is null, we don't need to search any further since
-                //it means that we don't have any layerBugDictionary in this column
-                x = i;
-                y = 0;
-                columnFound = YES;
-                rowFound = YES;
-            } else {
-                //If the column entry is not null, we need to start looking at each row entry in this column.
-                //Each entry here translates to a cell in the grid.
-                NSUInteger j = 0;
-                while(j < rows && !rowFound) {
-                    if([gridRows objectForKey: [NSNumber numberWithInt: j]] == nil) {
-                        y = j;
-                        columnFound = YES;
-                        rowFound = YES;
-                    }
-
-                    j++;
-                }
-            }
-
-            i++;
-        }*/
-
         //NSLog(@"Found new location for Bug %@ at %i:%i", [aBug name], x, y);
         //NSLog(@"This location is %@", [self isLocationOccupiedInLayer: layer atX: x atY: y] ? @"occupied" :  @"not occupied");
     } else {
@@ -401,80 +368,83 @@
 
     while(currentIteration < iterations) {
 
-//        NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
-               
-        //printf("Iteration %i of %i\n", currentIteration + 1, iterations);
-        
-        [bugs shuffle];
+        @autoreleasepool {
+     //        NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
 
-        NSEnumerator* bugEnumerator = [bugs objectEnumerator];
-        Bug* bug;
+            //printf("Iteration %i of %i\n", currentIteration + 1, iterations);
 
-        while((bug = [bugEnumerator nextObject])) {
-            NSString* originalLayer = [bug layer];
-            NSUInteger originalX = [bug x];
-            NSUInteger originalY = [bug y];
+            [bugs shuffle];
 
-            //NSLog(@"Bug %@ is going to act and location %i:%i is %@", [bug name], [bug x], [bug y], [self isOccupied: [bug layer] x: [bug x] y: [bug y]] ? @"occupied" : @"not occupied");
-            //NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
-            [bug act];
-            //[innerPool drain];
-            //NSLog(@"Bug has acted");
+            NSEnumerator* bugEnumerator = [bugs objectEnumerator];
+            Bug* bug;
 
-            if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
-                //NSLog(@"Bug has moved");
-                [self moveBugFrom: originalLayer atX: originalX atY: originalY toLayer: [bug layer] atX: [bug x] atY: [bug y]];
-                //NSLog(@"Updated bug position");
+            while((bug = [bugEnumerator nextObject])) {
+
+                NSString* originalLayer = [bug layer];
+                NSUInteger originalX = [bug x];
+                NSUInteger originalY = [bug y];
+
+                //NSLog(@"Bug %@ is going to act and location %i:%i is %@", [bug name], [bug x], [bug y], [self isOccupied: [bug layer] x: [bug x] y: [bug y]] ? @"occupied" : @"not occupied");
+                //NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
+                [bug act];
+                //[innerPool drain];
+                //NSLog(@"Bug has acted");
+
+                if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
+                    //NSLog(@"Bug has moved");
+                    [self moveBugFrom: originalLayer atX: originalX atY: originalY toLayer: [bug layer] atX: [bug x] atY: [bug y]];
+                    //NSLog(@"Updated bug position");
+                }
             }
-        }
 
-        if(currentIteration % snapshotInterval == 0) {
+            if(currentIteration % snapshotInterval == 0) {
 
-            printf("%s", [[toStringSerializer serializeToString] UTF8String]);   
-            /*
-             
-            NSUInteger i = 0;
-            NSUInteger j = 0;
-            NSUInteger k = 0;
+                printf("%s", [[toStringSerializer serializeToString] UTF8String]);
+                /*
 
-            
-            for(i = 0; i < rows; i++) {
+                NSUInteger i = 0;
+                NSUInteger j = 0;
+                NSUInteger k = 0;
+
+
+                for(i = 0; i < rows; i++) {
+
+                    for(k = 0; k < columns; k++) {
+                        printf("+---");
+                        if(k == columns - 1) {
+                            printf("+");
+                        }
+                    }
+
+                    printf("\n");
+
+                    for(j = 0; j < columns; j++) {
+                        if([self isOccupied: bugLayer x: j y: i]) {
+                            printf("| X ");
+                        } else {
+                            printf("|   ");
+                        }
+
+                        if(j == columns - 1) {
+                            printf("|\n");
+                        }
+                    }
+                }
 
                 for(k = 0; k < columns; k++) {
                     printf("+---");
                     if(k == columns - 1) {
                         printf("+");
                     }
-                }
+                } */
+            }
 
-                printf("\n");
-
-                for(j = 0; j < columns; j++) {
-                    if([self isOccupied: bugLayer x: j y: i]) {
-                        printf("| X ");
-                    } else {
-                        printf("|   ");
-                    }
-
-                    if(j == columns - 1) {
-                        printf("|\n");
-                    }
-                }
-            } 
-
-            for(k = 0; k < columns; k++) {
-                printf("+---");
-                if(k == columns - 1) {
-                    printf("+");
-                }
-            } */
-        } 
-
-        currentIteration++;
-        //printf("\n"); 
-        //
-//        [innerPool drain];
-    } 
+            currentIteration++;
+            //printf("\n");
+            //
+    //        [innerPool drain];
+        }
+    }
 
     //NSLog(@"Done.");
 }
