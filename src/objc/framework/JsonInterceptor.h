@@ -18,6 +18,3 @@
 - (void) addBugSerializer: (BugToStringSerializer *) bugToStringSerializer;
 
 @end
-
-
-

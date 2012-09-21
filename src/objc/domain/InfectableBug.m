@@ -70,7 +70,7 @@ infectionStartIteration: (NSUInteger) anInfectionStartIteration {
         _y += dy;
 
         _x %= rows; if(_x < 0) _x += rows;
-        _y %= columns; if(_x < 0) _y += columns;
+        _y %= columns; if(_y < 0) _y += columns;
 
         self.x = _x;
         self.y = _y;
