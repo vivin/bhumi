@@ -1,11 +1,8 @@
-#include <stdio.h>
-#import <Cocoa/Cocoa.h>
 #import "framework/World.h"
-#import "framework/WorldJsonSerializer.h"
 //#import "domain/RandomBug.h"
 //#import "domain/RandomBugJsonSerializer.h"
 #import "domain/InfectableBug.h"
-#import "domain/InfectableBugJsonSerializer.h"
+#import "JsonInterceptor.h"
 
 int main(void) {
     
@@ -20,7 +17,7 @@ int main(void) {
                                            columns: 100
                                         iterations: 2000
                                   snapshotInterval: 1
-                                   serializerClass: [WorldJsonSerializer class]];
+                                       interceptor: [[JsonInterceptor alloc] init]];
 
         /*
 
@@ -50,8 +47,7 @@ int main(void) {
                                                        infected: NO
                                                 infectionRadius: 1
                                                incubationPeriod: 10
-                                        infectionStartIteration: 0
-                                                serializerClass: [InfectableBugJsonSerializer class]]];
+                                        infectionStartIteration: 0]];
         }
 
         NSLog(@"Added all bugs. Going to add infected");
@@ -62,19 +58,12 @@ int main(void) {
                                                    infected: YES
                                             infectionRadius: 1
                                            incubationPeriod: 10
-                                    infectionStartIteration: 0
-                                            serializerClass: [InfectableBugJsonSerializer class]]];
+                                    infectionStartIteration: 0]];
 
         NSLog(@"Added infected. Going to start world");
-    //    @try {
-            [world start];
-    //    } @catch(NSException* ex) {
-    //        NSLog(@"%@", [ex callStackSymbols]);
-    //    }
-        // drain the autorelease pool
+        [world start];
         NSLog(@"Going to drain pool");
-      //  [pool drain]; //THIS CAUSES A SEGFAULT... WHY???
-        // execution never gets here ..
-        return 0;
     }
+
+    return 0;
 }

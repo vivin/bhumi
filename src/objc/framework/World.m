@@ -1,6 +1,5 @@
 #include "World.h"
-#import "WorldToStringSerializer.h"
-#import "BugToStringSerializer.h"
+#import "InterceptorProtocol.h"
 
 @implementation World
 
@@ -14,7 +13,7 @@
 @synthesize iterations;
 @synthesize snapshotInterval;
 @synthesize running;
-@synthesize toStringSerializer;
+@synthesize interceptor;
 
 - (id) init {
     self = [super init];
@@ -39,7 +38,7 @@
             columns: (NSUInteger) aColumns
          iterations: (NSUInteger) anIterations
    snapshotInterval: (NSUInteger) aSnapshotInterval
-    serializerClass: (Class) serializerClass {
+        interceptor: (id <InterceptorProtocol>) anInterceptor {
 
     self = [super init];
     self =[self init];
@@ -50,18 +49,7 @@
         columns = aColumns;
         iterations = anIterations;
         snapshotInterval = aSnapshotInterval;
-
-        toStringSerializer = [[serializerClass alloc] initWithWorld: self];
-
-        if([toStringSerializer isKindOfClass: [WorldToStringSerializer class]]) {
-
-
-            if([toStringSerializer serializerType] != [self class]) {
-                [NSException raise:@"Serializer format must match format of world!" format:@"Serializer format must match format of world!"];
-            }
-        } else {
-            [NSException raise:@"Serializer class is expected to be a subtype of WorldToStringSerializer!" format:@"Serializer class is expected to be a subtype WorldToStringSerializer!"];
-        }
+        interceptor = anInterceptor;
     }
 
     return self;
@@ -72,21 +60,16 @@
               columns: (NSUInteger) aColumns
            iterations: (NSUInteger) anIterations
      snapshotInterval: (NSUInteger) aSnapshotInterval
-      serializerClass: (Class) serializerClass {
+          interceptor: (id <InterceptorProtocol>) anInterceptor {
     return [[World alloc] initWithName: aName
                                   rows: aRows
                                columns: aColumns
                             iterations: anIterations
                       snapshotInterval: aSnapshotInterval
-                       serializerClass: serializerClass];
+                           interceptor: anInterceptor];
 }
 
-
 - (void) addBug: (Bug*) aBug {
-
-    if([[aBug toStringSerializer] serializerFormat] != [toStringSerializer serializerFormat]) {
-        [NSException raise:@"Serializer format of bug must match format of world!" format:@"Serializer format must match format of world!"];
-    }
 
     NSString* layer = [aBug layer];
 
@@ -148,17 +131,17 @@
     }
 
     NSMutableDictionary* gridColumns = [grid objectForKey: layer];
-    if([gridColumns objectForKey: [[NSNumber numberWithInt: x] stringValue]] == nil) {
+    if([gridColumns objectForKey: [NSNumber numberWithUnsignedInteger: x]] == nil) {
         //NSLog(@"Bug %@: column %i was empty so creating new dict", [aBug name], [aBug x]);
-        [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [[NSNumber numberWithInt: x] stringValue]];
+        [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [NSNumber numberWithUnsignedInteger: x]];
     }
 
-    NSMutableDictionary* gridRows = [gridColumns objectForKey: [[NSNumber numberWithInt: x] stringValue]];
-    if([gridRows objectForKey: [[NSNumber numberWithInt: y] stringValue]] == nil) {
+    NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithUnsignedInteger: x]];
+    if([gridRows objectForKey: [NSNumber numberWithUnsignedInteger: y]] == nil) {
         //NSLog(@"Bug %@: row %i (%i) was empty as it should be so setting bug at that location", [aBug name], [aBug y], y);
-        [gridRows setObject: aBug forKey: [[NSNumber numberWithInt: y] stringValue]];
+        [gridRows setObject: aBug forKey: [NSNumber numberWithUnsignedInteger: y]];
 
-        //NSLog(@"Location is %@", [gridRows objectForKey: [[NSNumber numberWithInt: y] stringValue]] == nil ? @"nil" : @"not nil");
+        //NSLog(@"Location is %@", [gridRows objectForKey: [[NSNumber numberWithUnsignedInteger: y] stringValue]] == nil ? @"nil" : @"not nil");
         //NSLog(@"%@:%i:%i is %@", layer, x, y, [self isLocationOccupiedInLayer: layer atX: x atY: y] ? @"occupied" : @"not occupied");
     }
 
@@ -174,10 +157,10 @@
                       atY: (NSUInteger) atY {
 
     if([self isLocationOccupiedInLayer: inLayer atX: atX atY: atY] == YES) {
-        Bug* bug = [[[grid objectForKey: inLayer] objectForKey: [[NSNumber numberWithInt: atX] stringValue]] objectForKey: [[NSNumber numberWithInt: atY] stringValue]];
+        Bug* bug = [[[grid objectForKey: inLayer] objectForKey: [NSNumber numberWithUnsignedInteger: atX]] objectForKey: [NSNumber numberWithUnsignedInteger: atY]];
         [bug kill]; 
 
-        [[[grid objectForKey: inLayer] objectForKey:  [[NSNumber numberWithInt: atX] stringValue]] removeObjectForKey: [[NSNumber numberWithInt: atY] stringValue]];
+        [[[grid objectForKey: inLayer] objectForKey:  [NSNumber numberWithUnsignedInteger: atX]] removeObjectForKey: [NSNumber numberWithUnsignedInteger: atY]];
 
         NSMutableArray* bugsInLayer = [layerBugDictionary objectForKey: inLayer];
         NSEnumerator* bugEnumerator = [bugsInLayer objectEnumerator];
@@ -204,7 +187,7 @@
     Bug* bug = nil;
 
     if([self isLocationOccupiedInLayer: inLayer atX: atX atY: atY] == YES) {
-        bug = [[[grid objectForKey: inLayer] objectForKey: [[NSNumber numberWithInt: atX] stringValue]] objectForKey: [[NSNumber numberWithInt: atY] stringValue]];
+        bug = [[[grid objectForKey: inLayer] objectForKey: [NSNumber numberWithUnsignedInteger: atX]] objectForKey: [NSNumber numberWithUnsignedInteger: atY]];
     }
 
     return bug;
@@ -247,7 +230,7 @@
 
         //NSLog(@"Location is not occupied!");
 
-        Bug* bug = [[[grid objectForKey: fromLayer] objectForKey: [[NSNumber numberWithInt: fromX] stringValue]] objectForKey: [[NSNumber numberWithInt: fromY] stringValue]];
+        Bug* bug = [[[grid objectForKey: fromLayer] objectForKey: [NSNumber numberWithUnsignedInteger: fromX]] objectForKey: [NSNumber numberWithUnsignedInteger: fromY]];
 
         NSAssert(bug != nil, @"Bug must not be nil!!");
 
@@ -270,7 +253,7 @@
             [[layerBugDictionary objectForKey: toLayer] addObject: bug];
         }
 
-        [[[grid objectForKey: fromLayer] objectForKey: [[NSNumber numberWithInt: fromX] stringValue]] removeObjectForKey: [[NSNumber numberWithInt: fromY] stringValue]];
+        [[[grid objectForKey: fromLayer] objectForKey: [NSNumber numberWithUnsignedInteger: fromX]] removeObjectForKey: [NSNumber numberWithUnsignedInteger: fromY]];
 
         //Mark the new location in the grid as occupied
         if([grid objectForKey: toLayer] == nil) {
@@ -278,12 +261,12 @@
         }
 
         NSMutableDictionary* gridColumns = [grid objectForKey: toLayer];
-        if([gridColumns objectForKey: [NSNumber numberWithInt: toX]] == nil) {
-            [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [NSNumber numberWithInt: toX]];
+        if([gridColumns objectForKey: [NSNumber numberWithUnsignedInteger: toX]] == nil) {
+            [gridColumns setObject: [[NSMutableDictionary alloc] init] forKey: [NSNumber numberWithUnsignedInteger: toX]];
         }
 
-        NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithInt: toX]];
-        [gridRows setObject: bug forKey: [NSNumber numberWithInt: toY]];
+        NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithUnsignedInteger: toX]];
+        [gridRows setObject: bug forKey: [NSNumber numberWithUnsignedInteger: toY]];
 
         success = YES;
     }
@@ -322,12 +305,12 @@
     if(gridColumns != nil) {
         //NSLog(@"Something is in the layer");
 
-        NSMutableDictionary* gridRows = [gridColumns objectForKey: [[NSNumber numberWithInt: atX] stringValue]];
+        NSMutableDictionary* gridRows = [gridColumns objectForKey: [NSNumber numberWithUnsignedInteger: atX]];
 
         if(gridRows != nil) {
             //NSLog(@"Something is in the rows");
 
-            Bug* bug = [gridRows objectForKey: [[NSNumber numberWithInt: atY] stringValue]];
+            Bug* bug = [gridRows objectForKey: [NSNumber numberWithUnsignedInteger: atY]];
 
             if(bug != nil) {
                 //NSLog(@"Something is in that cell");
@@ -369,9 +352,6 @@
     while(currentIteration < iterations) {
 
         @autoreleasepool {
-     //        NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
-
-            //printf("Iteration %i of %i\n", currentIteration + 1, iterations);
 
             [bugs shuffle];
 
@@ -385,9 +365,7 @@
                 NSUInteger originalY = [bug y];
 
                 //NSLog(@"Bug %@ is going to act and location %i:%i is %@", [bug name], [bug x], [bug y], [self isOccupied: [bug layer] x: [bug x] y: [bug y]] ? @"occupied" : @"not occupied");
-                //NSAutoreleasePool* innerPool = [[NSAutoreleasePool alloc] init];
                 [bug act];
-                //[innerPool drain];
                 //NSLog(@"Bug has acted");
 
                 if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
@@ -398,51 +376,10 @@
             }
 
             if(currentIteration % snapshotInterval == 0) {
-
-                printf("%s", [[toStringSerializer serializeToString] UTF8String]);
-                /*
-
-                NSUInteger i = 0;
-                NSUInteger j = 0;
-                NSUInteger k = 0;
-
-
-                for(i = 0; i < rows; i++) {
-
-                    for(k = 0; k < columns; k++) {
-                        printf("+---");
-                        if(k == columns - 1) {
-                            printf("+");
-                        }
-                    }
-
-                    printf("\n");
-
-                    for(j = 0; j < columns; j++) {
-                        if([self isOccupied: bugLayer x: j y: i]) {
-                            printf("| X ");
-                        } else {
-                            printf("|   ");
-                        }
-
-                        if(j == columns - 1) {
-                            printf("|\n");
-                        }
-                    }
-                }
-
-                for(k = 0; k < columns; k++) {
-                    printf("+---");
-                    if(k == columns - 1) {
-                        printf("+");
-                    }
-                } */
+                [interceptor intercept: self];
             }
 
             currentIteration++;
-            //printf("\n");
-            //
-    //        [innerPool drain];
         }
     }
 

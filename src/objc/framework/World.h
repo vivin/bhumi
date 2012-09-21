@@ -3,7 +3,7 @@
 #import "Bug.h"
 #import "ToStringSerializerProtocol.h"
 
-@class WorldToStringSerializer;
+@protocol InterceptorProtocol;
 
 @interface World : NSObject
 
@@ -22,24 +22,25 @@
 
 @property(readonly) BOOL running;
 
-@property(readonly) WorldToStringSerializer *toStringSerializer;
+@property(readonly) id <InterceptorProtocol> interceptor;
 
 - (id) init;
 
+//TODO: instead of having just one interceptor, consider having a bunch of interceptors
 
 - (id) initWithName: (NSString *) aName
                rows: (NSUInteger) aRows
             columns: (NSUInteger) aColumns
          iterations: (NSUInteger) anIterations
    snapshotInterval: (NSUInteger) aSnapshotInterval
-    serializerClass: (Class) serializerClass;
+        interceptor: (id <InterceptorProtocol>) anInterceptor;
 
 + (id) objectWithName: (NSString *) aName
                  rows: (NSUInteger) aRows
               columns: (NSUInteger) aColumns
            iterations: (NSUInteger) anIterations
      snapshotInterval: (NSUInteger) aSnapshotInterval
-      serializerClass: (Class) serializerClass;
+          interceptor: (id <InterceptorProtocol>) anInterceptor;
 
 - (void) addBug: (Bug *) bug;
 

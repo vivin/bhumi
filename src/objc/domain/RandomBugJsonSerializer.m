@@ -1,33 +1,37 @@
 #import "RandomBugJsonSerializer.h"
 #import "../framework/Bug.h"
 #import "RandomBug.h"
-#import "../framework/SerializerFormat.h"
 
 @class RandomBug;
 
 @implementation RandomBugJsonSerializer
 
-- (Class) serializerType {
+- (Class) serializedObjectType {
     return [RandomBug class];
 }
 
-- (SerializerFormat) serializerFormat {
-    return JSON;
+- (SerializerFormat*) serializerFormat {
+    return [SerializerFormats JSON];
 }
 
-- (NSString*) serializeToString {
+- (NSString*) serializeToStringWithObject: (id) objectToSerialize {
+
+    [super serializeToStringWithObject: objectToSerialize];
+
+    RandomBug*  bug = (RandomBug*) objectToSerialize;
+
     NSMutableString* json = [NSMutableString stringWithString: @""];
     
     [json appendString: @"{\"name\": \""];
-    [json appendString: [self.bug name]];
+    [json appendString: [bug name]];
     [json appendString: @"\",\n"];
     [json appendString: @"\"alive\": "];
-    [json appendString: [self.bug alive] == YES ? @"true,\n" : @"false,\n"];
+    [json appendString: [bug alive] == YES ? @"true,\n" : @"false,\n"];
     [json appendString: @"\"x\": "];
-    [json appendString: [[NSNumber numberWithInt: [self.bug x]] stringValue]];
+    [json appendString: [[NSNumber numberWithUnsignedInteger: [bug x]] stringValue]];
     [json appendString: @",\n"];
     [json appendString: @"\"y\": "];
-    [json appendString: [[NSNumber numberWithInt: [self.bug y]] stringValue]];
+    [json appendString: [[NSNumber numberWithUnsignedInteger: [bug y]] stringValue]];
     [json appendString: @"}"];
 
     return json;

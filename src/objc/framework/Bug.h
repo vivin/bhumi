@@ -14,31 +14,26 @@
     @property NSUInteger y;
     @property BOOL alive;
     @property(readonly) BOOL isPlaced;
-    @property(readonly) BugToStringSerializer *toStringSerializer;
 
 + (id) objectWithWorld: (World *) world
                   name: (NSString *) name
                  layer: (NSString *) layer
                      x: (NSUInteger) x
-                     y: (NSUInteger) y
-       serializerClass: (Class) serializerClass;
+                     y: (NSUInteger) y;
 
 - (id) initWithWorld: (World *) world
                 name: (NSString *) name
                layer: (NSString *) layer
                    x: (NSUInteger) x
-                   y: (NSUInteger) y
-     serializerClass: (Class) serializerClass;
+                   y: (NSUInteger) y;
 
 - (id) initWithWorld: (World *) aWorld
                 name: (NSString *) aName
-               layer: (NSString *) aLayer
-     serializerClass: (Class) serializerClass;
+               layer: (NSString *) aLayer;
 
 + (id) objectWithWorld: (World *) aWorld
                   name: (NSString *) aName
-                 layer: (NSString *) aLayer
-       serializerClass: (Class) serializerClass;
+                 layer: (NSString *) aLayer;
 
 - (void) setX: (NSUInteger) anX
             Y: (NSUInteger) aY;

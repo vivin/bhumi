@@ -20,27 +20,21 @@
                infected: (BOOL) anInfected
         infectionRadius: (NSUInteger) anInfectionRadius
        incubationPeriod: (NSUInteger) anIncubationPeriod
-infectionStartIteration: (NSUInteger) anInfectionStartIteration
-     serializerClass: (Class) serializerClass {
+infectionStartIteration: (NSUInteger) anInfectionStartIteration {
 
     if((self = [super initWithWorld: aWorld
                                name: aName
-                              layer: aLayer
-                    serializerClass: serializerClass])) {
-
+                              layer: aLayer])) {
+        infected = anInfected;
+        infectionRadius = anInfectionRadius;
+        incubationPeriod = anIncubationPeriod;
+        infectionStartIteration = anInfectionStartIteration;
     }
 
-    infected = anInfected;
-    infectionRadius = anInfectionRadius;
-    incubationPeriod = anIncubationPeriod;
-    infectionStartIteration = anInfectionStartIteration;
-    
     return self;
 }
 
 - (void) act {
-
-//    NSAutoreleasePool *actPool = [[NSAutoreleasePool alloc] init];
 
     NSUInteger rows = [self.world rows];
     NSUInteger columns = [self.world columns];
@@ -75,9 +69,8 @@ infectionStartIteration: (NSUInteger) anInfectionStartIteration
         NSInteger dy = (arc4random() % 3) - 1;
         _y += dy;
 
-        //Straight forward mod doesn't work with negative numbers
         _x %= rows; if(_x < 0) _x += rows;
-        _y %= columns; if(_y < 0) _y += columns;
+        _y %= columns; if(_x < 0) _y += columns;
 
         self.x = _x;
         self.y = _y;

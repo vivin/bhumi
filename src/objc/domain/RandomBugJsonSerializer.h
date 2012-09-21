@@ -1,5 +1,5 @@
 #import "../framework/ToStringSerializerProtocol.h"
-#import "../framework/BugToStringSerializer.h"
+#import "BugToStringSerializer.h"
 
 @interface RandomBugJsonSerializer : BugToStringSerializer
 @end

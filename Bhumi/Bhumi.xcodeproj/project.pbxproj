@@ -7,16 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B0582DC07106CC9FCE5AF6D /* JsonInterceptor.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B0588E75C9538422DEB9BEA /* JsonInterceptor.h */; };
+		6B0586283A8FCC84668DAC5E /* SerializerFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058E715CE975295EADB6B1 /* SerializerFormat.m */; };
+		6B0586E0272607862558930E /* SerializerFormatProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B05859CDC4C524C3E1BAA0B /* SerializerFormatProtocol.h */; };
+		6B05880B476176CF963ED8BA /* SerializerFormats.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058E2CB7B81A079954D901 /* SerializerFormats.m */; };
+		6B0589E02A71981D78E92D88 /* InfectableBugJsonSerializer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B0585821B1D8C5FD42C2B62 /* InfectableBugJsonSerializer.h */; };
+		6B058AB649158FE493D07861 /* SerializerFormats.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B05848034A81742508DB281 /* SerializerFormats.h */; };
+		6B058B15A5AA0C4E691B1EC2 /* InterceptorProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B058DD9CAAE7C8F6C641C02 /* InterceptorProtocol.h */; };
+		6B058B455346154BE1E5421B /* JsonInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058C4C6B04BACA705B0FEE /* JsonInterceptor.m */; };
+		6B058DAF53A2866333673E01 /* SerializerFormat.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B05811583F39F908FBA6D64 /* SerializerFormat.h */; };
+		6B058DD9B2FF9ABFCADC2AF8 /* InfectableBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058739FAB34A99AAB5A8F9 /* InfectableBugJsonSerializer.m */; };
 		94540AF0160597A200C84C5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94540AEF160597A200C84C5D /* Foundation.framework */; };
 		94540AF7160597A200C84C5D /* Bhumi.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 94540AF6160597A200C84C5D /* Bhumi.1 */; };
 		94540B0D160597C500C84C5D /* Bug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540AFF160597C500C84C5D /* Bug.m */; };
 		94540B0E160597C500C84C5D /* BugToStringSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B02160597C500C84C5D /* BugToStringSerializer.m */; };
 		94540B0F160597C500C84C5D /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B04160597C500C84C5D /* NSMutableArray+Shuffle.m */; };
 		94540B10160597C500C84C5D /* World.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B08160597C500C84C5D /* World.m */; };
-		94540B11160597C500C84C5D /* WorldJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B0A160597C500C84C5D /* WorldJsonSerializer.m */; };
-		94540B12160597C500C84C5D /* WorldToStringSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B0C160597C500C84C5D /* WorldToStringSerializer.m */; };
 		94540B1C160597DD00C84C5D /* InfectableBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B15160597DD00C84C5D /* InfectableBug.m */; };
-		94540B1D160597DD00C84C5D /* InfectableBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B17160597DD00C84C5D /* InfectableBugJsonSerializer.m */; };
 		94540B1E160597DD00C84C5D /* RandomBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B19160597DD00C84C5D /* RandomBug.m */; };
 		94540B1F160597DD00C84C5D /* RandomBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B1B160597DD00C84C5D /* RandomBugJsonSerializer.m */; };
 		94540B21160597FF00C84C5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540B20160597FF00C84C5D /* main.m */; };
@@ -30,12 +37,28 @@
 			dstSubfolderSpec = 0;
 			files = (
 				94540AF7160597A200C84C5D /* Bhumi.1 in CopyFiles */,
+				6B058B15A5AA0C4E691B1EC2 /* InterceptorProtocol.h in CopyFiles */,
+				6B0582DC07106CC9FCE5AF6D /* JsonInterceptor.h in CopyFiles */,
+				6B0589E02A71981D78E92D88 /* InfectableBugJsonSerializer.h in CopyFiles */,
+				6B0586E0272607862558930E /* SerializerFormatProtocol.h in CopyFiles */,
+				6B058AB649158FE493D07861 /* SerializerFormats.h in CopyFiles */,
+				6B058DAF53A2866333673E01 /* SerializerFormat.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B05811583F39F908FBA6D64 /* SerializerFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormat.h; sourceTree = "<group>"; };
+		6B05848034A81742508DB281 /* SerializerFormats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormats.h; sourceTree = "<group>"; };
+		6B0585821B1D8C5FD42C2B62 /* InfectableBugJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableBugJsonSerializer.h; sourceTree = "<group>"; };
+		6B05859CDC4C524C3E1BAA0B /* SerializerFormatProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormatProtocol.h; sourceTree = "<group>"; };
+		6B058739FAB34A99AAB5A8F9 /* InfectableBugJsonSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableBugJsonSerializer.m; sourceTree = "<group>"; };
+		6B0588E75C9538422DEB9BEA /* JsonInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonInterceptor.h; sourceTree = "<group>"; };
+		6B058C4C6B04BACA705B0FEE /* JsonInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonInterceptor.m; sourceTree = "<group>"; };
+		6B058DD9CAAE7C8F6C641C02 /* InterceptorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterceptorProtocol.h; sourceTree = "<group>"; };
+		6B058E2CB7B81A079954D901 /* SerializerFormats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializerFormats.m; sourceTree = "<group>"; };
+		6B058E715CE975295EADB6B1 /* SerializerFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializerFormat.m; sourceTree = "<group>"; };
 		94540AEB160597A200C84C5D /* Bhumi */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Bhumi; sourceTree = BUILT_PRODUCTS_DIR; };
 		94540AEF160597A200C84C5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94540AF5160597A200C84C5D /* Bhumi-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bhumi-Prefix.pch"; sourceTree = "<group>"; };
@@ -47,18 +70,11 @@
 		94540B02160597C500C84C5D /* BugToStringSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugToStringSerializer.m; sourceTree = "<group>"; };
 		94540B03160597C500C84C5D /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		94540B04160597C500C84C5D /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
-		94540B05160597C500C84C5D /* SerializerFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormat.h; sourceTree = "<group>"; };
 		94540B06160597C500C84C5D /* ToStringSerializerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToStringSerializerProtocol.h; sourceTree = "<group>"; };
 		94540B07160597C500C84C5D /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
 		94540B08160597C500C84C5D /* World.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = World.m; sourceTree = "<group>"; };
-		94540B09160597C500C84C5D /* WorldJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldJsonSerializer.h; sourceTree = "<group>"; };
-		94540B0A160597C500C84C5D /* WorldJsonSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldJsonSerializer.m; sourceTree = "<group>"; };
-		94540B0B160597C500C84C5D /* WorldToStringSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorldToStringSerializer.h; sourceTree = "<group>"; };
-		94540B0C160597C500C84C5D /* WorldToStringSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorldToStringSerializer.m; sourceTree = "<group>"; };
 		94540B14160597DD00C84C5D /* InfectableBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableBug.h; sourceTree = "<group>"; };
 		94540B15160597DD00C84C5D /* InfectableBug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableBug.m; sourceTree = "<group>"; };
-		94540B16160597DD00C84C5D /* InfectableBugJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableBugJsonSerializer.h; sourceTree = "<group>"; };
-		94540B17160597DD00C84C5D /* InfectableBugJsonSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableBugJsonSerializer.m; sourceTree = "<group>"; };
 		94540B18160597DD00C84C5D /* RandomBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomBug.h; sourceTree = "<group>"; };
 		94540B19160597DD00C84C5D /* RandomBug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomBug.m; sourceTree = "<group>"; };
 		94540B1A160597DD00C84C5D /* RandomBugJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomBugJsonSerializer.h; sourceTree = "<group>"; };
@@ -126,6 +142,14 @@
 		94540AFD160597C500C84C5D /* framework */ = {
 			isa = PBXGroup;
 			children = (
+				6B05811583F39F908FBA6D64 /* SerializerFormat.h */,
+				6B058E715CE975295EADB6B1 /* SerializerFormat.m */,
+				6B05848034A81742508DB281 /* SerializerFormats.h */,
+				6B058E2CB7B81A079954D901 /* SerializerFormats.m */,
+				6B05859CDC4C524C3E1BAA0B /* SerializerFormatProtocol.h */,
+				6B0588E75C9538422DEB9BEA /* JsonInterceptor.h */,
+				6B058C4C6B04BACA705B0FEE /* JsonInterceptor.m */,
+				6B058DD9CAAE7C8F6C641C02 /* InterceptorProtocol.h */,
 				94540AFE160597C500C84C5D /* Bug.h */,
 				94540AFF160597C500C84C5D /* Bug.m */,
 				94540B00160597C500C84C5D /* BugProtocol.h */,
@@ -133,14 +157,9 @@
 				94540B02160597C500C84C5D /* BugToStringSerializer.m */,
 				94540B03160597C500C84C5D /* NSMutableArray+Shuffle.h */,
 				94540B04160597C500C84C5D /* NSMutableArray+Shuffle.m */,
-				94540B05160597C500C84C5D /* SerializerFormat.h */,
 				94540B06160597C500C84C5D /* ToStringSerializerProtocol.h */,
 				94540B07160597C500C84C5D /* World.h */,
 				94540B08160597C500C84C5D /* World.m */,
-				94540B09160597C500C84C5D /* WorldJsonSerializer.h */,
-				94540B0A160597C500C84C5D /* WorldJsonSerializer.m */,
-				94540B0B160597C500C84C5D /* WorldToStringSerializer.h */,
-				94540B0C160597C500C84C5D /* WorldToStringSerializer.m */,
 			);
 			name = framework;
 			path = ../../src/objc/framework;
@@ -149,10 +168,10 @@
 		94540B13160597DD00C84C5D /* domain */ = {
 			isa = PBXGroup;
 			children = (
+				6B058739FAB34A99AAB5A8F9 /* InfectableBugJsonSerializer.m */,
+				6B0585821B1D8C5FD42C2B62 /* InfectableBugJsonSerializer.h */,
 				94540B14160597DD00C84C5D /* InfectableBug.h */,
 				94540B15160597DD00C84C5D /* InfectableBug.m */,
-				94540B16160597DD00C84C5D /* InfectableBugJsonSerializer.h */,
-				94540B17160597DD00C84C5D /* InfectableBugJsonSerializer.m */,
 				94540B18160597DD00C84C5D /* RandomBug.h */,
 				94540B19160597DD00C84C5D /* RandomBug.m */,
 				94540B1A160597DD00C84C5D /* RandomBugJsonSerializer.h */,
@@ -217,13 +236,14 @@
 				94540B0E160597C500C84C5D /* BugToStringSerializer.m in Sources */,
 				94540B0F160597C500C84C5D /* NSMutableArray+Shuffle.m in Sources */,
 				94540B10160597C500C84C5D /* World.m in Sources */,
-				94540B11160597C500C84C5D /* WorldJsonSerializer.m in Sources */,
-				94540B12160597C500C84C5D /* WorldToStringSerializer.m in Sources */,
 				94540B1C160597DD00C84C5D /* InfectableBug.m in Sources */,
-				94540B1D160597DD00C84C5D /* InfectableBugJsonSerializer.m in Sources */,
 				94540B1E160597DD00C84C5D /* RandomBug.m in Sources */,
 				94540B1F160597DD00C84C5D /* RandomBugJsonSerializer.m in Sources */,
 				94540B21160597FF00C84C5D /* main.m in Sources */,
+				6B058B455346154BE1E5421B /* JsonInterceptor.m in Sources */,
+				6B058DD9B2FF9ABFCADC2AF8 /* InfectableBugJsonSerializer.m in Sources */,
+				6B05880B476176CF963ED8BA /* SerializerFormats.m in Sources */,
+				6B0586283A8FCC84668DAC5E /* SerializerFormat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,8 +13,7 @@
                infected: (BOOL) anInfected
         infectionRadius: (NSUInteger) anInfectionRadius
        incubationPeriod: (NSUInteger) anIncubationPeriod
-infectionStartIteration: (NSUInteger) anInfectionStartIteration
-        serializerClass: (Class) serializerClass;
+infectionStartIteration: (NSUInteger) anInfectionStartIteration;
 
 - (NSArray*) scan;
 - (void) infect;
