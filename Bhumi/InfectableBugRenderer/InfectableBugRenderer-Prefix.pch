@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'InfectableBugRenderer' target in the 'InfectableBugRenderer' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

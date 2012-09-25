@@ -349,6 +349,8 @@
 
 - (void) start {
 
+    running = YES;
+
     while(currentIteration < iterations) {
 
         @autoreleasepool {

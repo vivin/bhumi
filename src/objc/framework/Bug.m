@@ -91,6 +91,7 @@
 
 - (void) setX: (NSUInteger)anX
             Y: (NSUInteger) aY {
+    isPlaced = YES;
     x = anX;
     y = aY;
 }

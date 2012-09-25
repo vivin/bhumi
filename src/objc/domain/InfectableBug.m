@@ -61,11 +61,11 @@ infectionStartIteration: (NSUInteger) anInfectionStartIteration {
 
     do {
 
-        NSInteger _x = 0;
+        NSInteger _x = self.x;
         NSInteger dx = (arc4random() % 3) - 1;
         _x += dx;
 
-        NSInteger _y = 0;
+        NSInteger _y = self.y;
         NSInteger dy = (arc4random() % 3) - 1;
         _y += dy;
 
