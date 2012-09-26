@@ -382,6 +382,12 @@
             }
 
             currentIteration++;
+            struct timespec time;
+            time.tv_sec  = 0;
+            time.tv_nsec = 500000000L;
+            
+            nanosleep(&time, NULL);
+
         }
     }
 

@@ -61,17 +61,21 @@
     return YES;
 }
 
+- (void) refreshView {
+    [self setNeedsDisplay: YES];
+}
+
 - (void) intercept: (World *) aWorld {
    
     struct timespec time;
     time.tv_sec  = 0;
     time.tv_nsec = 500000000L;
 
-    //nanosleep(&time, NULL);
-
     @synchronized (_lock) {
-        [self setNeedsDisplay: YES];
+        [self performSelectorOnMainThread: @selector(refreshView) withObject: nil waitUntilDone: NO];
     }
+    
+    nanosleep(&time, NULL);
 }
 
 @end
