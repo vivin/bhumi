@@ -123,7 +123,7 @@
     }
 
     [aBug setX: x Y: y];
-
+    
     //Mark the location in the grid as occupied
     if([grid objectForKey: layer] == nil) {
         //NSLog(@"Bug %@: layer %@ was empty so creating new dict", [aBug name], layer);

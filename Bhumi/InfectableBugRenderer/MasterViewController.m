@@ -23,19 +23,19 @@
         _worldView = [[WorldView alloc] init];
 
         World* world = [[World alloc] initWithName: @"Bhumi"
-                                              rows: 100
-                                           columns: 100
+                                              rows: 192
+                                           columns: 256
                                         iterations: 2000
                                   snapshotInterval: 1
                                        interceptor: _worldView];
-        for(int i = 0; i < 999; i++) {
+        for(int i = 0; i < 9999; i++) {
             NSMutableString* name = [NSMutableString stringWithString: @"HealthyBug"];
             [name appendString: [[NSNumber numberWithInt: i] stringValue]];
             [world addBug: [[InfectableBug alloc] initWithWorld: world
                                                            name: name
                                                           layer: @"FirstLayer"
                                                        infected: NO
-                                                infectionRadius: 1
+                                                infectionRadius: 5
                                                incubationPeriod: 10
                                         infectionStartIteration: 0]];
         }
@@ -46,7 +46,7 @@
                                                        name: @"InfectedBug"
                                                       layer: @"FirstLayer"
                                                    infected: YES
-                                            infectionRadius: 1
+                                            infectionRadius: 5
                                            incubationPeriod: 10
                                     infectionStartIteration: 0]];
 
@@ -61,7 +61,5 @@
 - (NSView*) view {
     return self.worldView;
 }
-
-
 
 @end

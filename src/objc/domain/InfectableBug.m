@@ -62,15 +62,15 @@ infectionStartIteration: (NSUInteger) anInfectionStartIteration {
     do {
 
         NSInteger _x = self.x;
-        NSInteger dx = (arc4random() % 3) - 1;
+        NSInteger dx = (arc4random() % 3); dx--;
         _x += dx;
 
         NSInteger _y = self.y;
-        NSInteger dy = (arc4random() % 3) - 1;
+        NSInteger dy = (arc4random() % 3); dy--;
         _y += dy;
 
-        _x %= rows; if(_x < 0) _x += rows;
-        _y %= columns; if(_y < 0) _y += columns;
+        _x %= columns; if(_x < 0) _x += columns;
+        _y %= rows; if(_y < 0) _y += rows;
 
         self.x = _x;
         self.y = _y;
