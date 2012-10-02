@@ -176,7 +176,7 @@
         //We must always find the bug we are looking for!
         NSAssert(found, @"We must have been able to find the bug we are looking for");
 
-        [bugsInLayer removeObjectAtIndex: i--];
+        [bugsInLayer removeObjectAtIndex: --i];
     }
 }
 
@@ -355,10 +355,13 @@
 
         @autoreleasepool {
 
+            NSMutableArray* indicesOfDeadBugs = [[NSMutableArray alloc] init];
+
             [bugs shuffle];
 
             NSEnumerator* bugEnumerator = [bugs objectEnumerator];
             Bug* bug;
+            NSUInteger i = 0;
 
             while((bug = [bugEnumerator nextObject])) {
 
@@ -370,11 +373,26 @@
                 [bug act];
                 //NSLog(@"Bug has acted");
 
-                if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
-                    //NSLog(@"Bug has moved");
-                    [self moveBugFrom: originalLayer atX: originalX atY: originalY toLayer: [bug layer] atX: [bug x] atY: [bug y]];
-                    //NSLog(@"Updated bug position");
+                if([bug alive]) {
+                    if(![originalLayer isEqualToString: [bug layer]] || originalX != [bug x] || originalY != [bug y]) {
+                        //NSLog(@"Bug has moved");
+                        [self moveBugFrom: originalLayer atX: originalX atY: originalY toLayer: [bug layer] atX: [bug x] atY: [bug y]];
+                        //NSLog(@"Updated bug position");
+                    }
+                } else {
+                    [indicesOfDeadBugs addObject: [NSNumber numberWithUnsignedInt: i]];
                 }
+
+                i++;
+            }
+
+            NSEnumerator* indexEnumerator = [indicesOfDeadBugs objectEnumerator];
+            NSNumber* index;
+
+            while ((index = [indexEnumerator nextObject])) {
+                Bug* bugToRemove = [bugs objectAtIndex:  [index unsignedIntegerValue]];
+                [self removeBug: bugToRemove];
+                [bugs removeObjectAtIndex: [index unsignedIntegerValue]];
             }
 
             if(currentIteration % snapshotInterval == 0) {
@@ -382,11 +400,13 @@
             }
 
             currentIteration++;
+
+            
             struct timespec time;
             time.tv_sec  = 0;
             time.tv_nsec = 500000000L;
             
-            nanosleep(&time, NULL);
+            //nanosleep(&time, NULL);
 
         }
     }

@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Infectable Bug Renderer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>InfectableBugRenderer.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
+		</dict>
+		<key>InfectableNonLinearBugRenderer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -48,6 +58,11 @@
 			<true/>
 		</dict>
 		<key>949034FE1610E13F0003C023</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>94DFF868161A468000D94B2E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

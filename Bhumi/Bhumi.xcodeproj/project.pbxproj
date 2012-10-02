@@ -8,15 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		6B0582DC07106CC9FCE5AF6D /* JsonInterceptor.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B0588E75C9538422DEB9BEA /* JsonInterceptor.h */; };
+		6B0583BC71FD3045EC2FBD7F /* InfectableNonLinearBug.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B05819E10C48939D564AC39 /* InfectableNonLinearBug.h */; };
 		6B0586283A8FCC84668DAC5E /* SerializerFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058E715CE975295EADB6B1 /* SerializerFormat.m */; };
 		6B0586E0272607862558930E /* SerializerFormatProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B05859CDC4C524C3E1BAA0B /* SerializerFormatProtocol.h */; };
+		6B0587824C8B614D7D6DB15E /* InfectableNonLinearBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058C05B68F854FD728DF25 /* InfectableNonLinearBug.m */; };
 		6B05880B476176CF963ED8BA /* SerializerFormats.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058E2CB7B81A079954D901 /* SerializerFormats.m */; };
 		6B0589E02A71981D78E92D88 /* InfectableBugJsonSerializer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B0585821B1D8C5FD42C2B62 /* InfectableBugJsonSerializer.h */; };
+		6B058A7724C899AEC3285BF6 /* InfectableNonLinearBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058C05B68F854FD728DF25 /* InfectableNonLinearBug.m */; };
 		6B058AB649158FE493D07861 /* SerializerFormats.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B05848034A81742508DB281 /* SerializerFormats.h */; };
 		6B058B15A5AA0C4E691B1EC2 /* InterceptorProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B058DD9CAAE7C8F6C641C02 /* InterceptorProtocol.h */; };
 		6B058B455346154BE1E5421B /* JsonInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058C4C6B04BACA705B0FEE /* JsonInterceptor.m */; };
 		6B058DAF53A2866333673E01 /* SerializerFormat.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B05811583F39F908FBA6D64 /* SerializerFormat.h */; };
 		6B058DD9B2FF9ABFCADC2AF8 /* InfectableBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B058739FAB34A99AAB5A8F9 /* InfectableBugJsonSerializer.m */; };
+		6B058E52826EC982EDAEFC73 /* InfectableNonLinearBugState.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6B058EA20CA9E4C867AC017F /* InfectableNonLinearBugState.h */; };
 		94540AF0160597A200C84C5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94540AEF160597A200C84C5D /* Foundation.framework */; };
 		94540AF7160597A200C84C5D /* Bhumi.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 94540AF6160597A200C84C5D /* Bhumi.1 */; };
 		94540B0D160597C500C84C5D /* Bug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94540AFF160597C500C84C5D /* Bug.m */; };
@@ -51,6 +55,27 @@
 		9490355A16112CD90003C023 /* InfectableBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9490355416112CD90003C023 /* InfectableBugJsonSerializer.m */; };
 		9490355B16112CD90003C023 /* RandomBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 9490355616112CD90003C023 /* RandomBug.m */; };
 		9490355C16112CD90003C023 /* RandomBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9490355816112CD90003C023 /* RandomBugJsonSerializer.m */; };
+		94DFF86B161A468100D94B2E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949034701610C6880003C023 /* Cocoa.framework */; };
+		94DFF871161A468100D94B2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94DFF86F161A468100D94B2E /* InfoPlist.strings */; };
+		94DFF873161A468100D94B2E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF872161A468100D94B2E /* main.m */; };
+		94DFF877161A468100D94B2E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 94DFF875161A468100D94B2E /* Credits.rtf */; };
+		94DFF87A161A468100D94B2E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF879161A468100D94B2E /* AppDelegate.m */; };
+		94DFF87D161A468100D94B2E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DFF87B161A468100D94B2E /* MainMenu.xib */; };
+		94DFF88E161A46AA00D94B2E /* InfectableBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF884161A46AA00D94B2E /* InfectableBug.m */; };
+		94DFF88F161A46AA00D94B2E /* InfectableBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF886161A46AA00D94B2E /* InfectableBugJsonSerializer.m */; };
+		94DFF890161A46AA00D94B2E /* InfectableNonLinearBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF888161A46AA00D94B2E /* InfectableNonLinearBug.m */; };
+		94DFF891161A46AA00D94B2E /* RandomBug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF88B161A46AA00D94B2E /* RandomBug.m */; };
+		94DFF892161A46AA00D94B2E /* RandomBugJsonSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF88D161A46AA00D94B2E /* RandomBugJsonSerializer.m */; };
+		94DFF8A6161A46C000D94B2E /* Bug.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF895161A46C000D94B2E /* Bug.m */; };
+		94DFF8A7161A46C000D94B2E /* BugToStringSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF898161A46C000D94B2E /* BugToStringSerializer.m */; };
+		94DFF8A8161A46C000D94B2E /* JsonInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF89B161A46C000D94B2E /* JsonInterceptor.m */; };
+		94DFF8A9161A46C000D94B2E /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF89D161A46C000D94B2E /* NSMutableArray+Shuffle.m */; };
+		94DFF8AA161A46C000D94B2E /* SerializerFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF89F161A46C000D94B2E /* SerializerFormat.m */; };
+		94DFF8AB161A46C000D94B2E /* SerializerFormats.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF8A2161A46C000D94B2E /* SerializerFormats.m */; };
+		94DFF8AC161A46C000D94B2E /* World.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF8A5161A46C000D94B2E /* World.m */; };
+		94DFF8B0161A473200D94B2E /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF8AE161A473200D94B2E /* MasterViewController.m */; };
+		94DFF8B1161A473200D94B2E /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94DFF8AF161A473200D94B2E /* MasterViewController.xib */; };
+		94DFF8B4161A484E00D94B2E /* InfectableNonLinearBugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DFF8B3161A484E00D94B2E /* InfectableNonLinearBugView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +102,8 @@
 				6B0586E0272607862558930E /* SerializerFormatProtocol.h in CopyFiles */,
 				6B058AB649158FE493D07861 /* SerializerFormats.h in CopyFiles */,
 				6B058DAF53A2866333673E01 /* SerializerFormat.h in CopyFiles */,
+				6B0583BC71FD3045EC2FBD7F /* InfectableNonLinearBug.h in CopyFiles */,
+				6B058E52826EC982EDAEFC73 /* InfectableNonLinearBugState.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -84,15 +111,18 @@
 
 /* Begin PBXFileReference section */
 		6B05811583F39F908FBA6D64 /* SerializerFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormat.h; sourceTree = "<group>"; };
+		6B05819E10C48939D564AC39 /* InfectableNonLinearBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableNonLinearBug.h; sourceTree = "<group>"; };
 		6B05848034A81742508DB281 /* SerializerFormats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormats.h; sourceTree = "<group>"; };
 		6B0585821B1D8C5FD42C2B62 /* InfectableBugJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableBugJsonSerializer.h; sourceTree = "<group>"; };
 		6B05859CDC4C524C3E1BAA0B /* SerializerFormatProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormatProtocol.h; sourceTree = "<group>"; };
 		6B058739FAB34A99AAB5A8F9 /* InfectableBugJsonSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableBugJsonSerializer.m; sourceTree = "<group>"; };
 		6B0588E75C9538422DEB9BEA /* JsonInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonInterceptor.h; sourceTree = "<group>"; };
+		6B058C05B68F854FD728DF25 /* InfectableNonLinearBug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableNonLinearBug.m; sourceTree = "<group>"; };
 		6B058C4C6B04BACA705B0FEE /* JsonInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonInterceptor.m; sourceTree = "<group>"; };
 		6B058DD9CAAE7C8F6C641C02 /* InterceptorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterceptorProtocol.h; sourceTree = "<group>"; };
 		6B058E2CB7B81A079954D901 /* SerializerFormats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializerFormats.m; sourceTree = "<group>"; };
 		6B058E715CE975295EADB6B1 /* SerializerFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializerFormat.m; sourceTree = "<group>"; };
+		6B058EA20CA9E4C867AC017F /* InfectableNonLinearBugState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableNonLinearBugState.h; sourceTree = "<group>"; };
 		94540AEB160597A200C84C5D /* Bhumi */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Bhumi; sourceTree = BUILT_PRODUCTS_DIR; };
 		94540AEF160597A200C84C5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94540AF5160597A200C84C5D /* Bhumi-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bhumi-Prefix.pch"; sourceTree = "<group>"; };
@@ -165,6 +195,49 @@
 		9490355616112CD90003C023 /* RandomBug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomBug.m; sourceTree = "<group>"; };
 		9490355716112CD90003C023 /* RandomBugJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomBugJsonSerializer.h; sourceTree = "<group>"; };
 		9490355816112CD90003C023 /* RandomBugJsonSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomBugJsonSerializer.m; sourceTree = "<group>"; };
+		94DFF869161A468000D94B2E /* InfectableNonLinearBugRenderer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfectableNonLinearBugRenderer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94DFF86E161A468100D94B2E /* InfectableNonLinearBugRenderer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InfectableNonLinearBugRenderer-Info.plist"; sourceTree = "<group>"; };
+		94DFF870161A468100D94B2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		94DFF872161A468100D94B2E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		94DFF874161A468100D94B2E /* InfectableNonLinearBugRenderer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InfectableNonLinearBugRenderer-Prefix.pch"; sourceTree = "<group>"; };
+		94DFF876161A468100D94B2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		94DFF878161A468100D94B2E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		94DFF879161A468100D94B2E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		94DFF87C161A468100D94B2E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		94DFF883161A46AA00D94B2E /* InfectableBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableBug.h; sourceTree = "<group>"; };
+		94DFF884161A46AA00D94B2E /* InfectableBug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableBug.m; sourceTree = "<group>"; };
+		94DFF885161A46AA00D94B2E /* InfectableBugJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableBugJsonSerializer.h; sourceTree = "<group>"; };
+		94DFF886161A46AA00D94B2E /* InfectableBugJsonSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableBugJsonSerializer.m; sourceTree = "<group>"; };
+		94DFF887161A46AA00D94B2E /* InfectableNonLinearBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableNonLinearBug.h; sourceTree = "<group>"; };
+		94DFF888161A46AA00D94B2E /* InfectableNonLinearBug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableNonLinearBug.m; sourceTree = "<group>"; };
+		94DFF889161A46AA00D94B2E /* InfectableNonLinearBugState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableNonLinearBugState.h; sourceTree = "<group>"; };
+		94DFF88A161A46AA00D94B2E /* RandomBug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomBug.h; sourceTree = "<group>"; };
+		94DFF88B161A46AA00D94B2E /* RandomBug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomBug.m; sourceTree = "<group>"; };
+		94DFF88C161A46AA00D94B2E /* RandomBugJsonSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomBugJsonSerializer.h; sourceTree = "<group>"; };
+		94DFF88D161A46AA00D94B2E /* RandomBugJsonSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomBugJsonSerializer.m; sourceTree = "<group>"; };
+		94DFF894161A46C000D94B2E /* Bug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bug.h; sourceTree = "<group>"; };
+		94DFF895161A46C000D94B2E /* Bug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bug.m; sourceTree = "<group>"; };
+		94DFF896161A46C000D94B2E /* BugProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugProtocol.h; sourceTree = "<group>"; };
+		94DFF897161A46C000D94B2E /* BugToStringSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BugToStringSerializer.h; sourceTree = "<group>"; };
+		94DFF898161A46C000D94B2E /* BugToStringSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BugToStringSerializer.m; sourceTree = "<group>"; };
+		94DFF899161A46C000D94B2E /* InterceptorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterceptorProtocol.h; sourceTree = "<group>"; };
+		94DFF89A161A46C000D94B2E /* JsonInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonInterceptor.h; sourceTree = "<group>"; };
+		94DFF89B161A46C000D94B2E /* JsonInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonInterceptor.m; sourceTree = "<group>"; };
+		94DFF89C161A46C000D94B2E /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
+		94DFF89D161A46C000D94B2E /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
+		94DFF89E161A46C000D94B2E /* SerializerFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormat.h; sourceTree = "<group>"; };
+		94DFF89F161A46C000D94B2E /* SerializerFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializerFormat.m; sourceTree = "<group>"; };
+		94DFF8A0161A46C000D94B2E /* SerializerFormatProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormatProtocol.h; sourceTree = "<group>"; };
+		94DFF8A1161A46C000D94B2E /* SerializerFormats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerFormats.h; sourceTree = "<group>"; };
+		94DFF8A2161A46C000D94B2E /* SerializerFormats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializerFormats.m; sourceTree = "<group>"; };
+		94DFF8A3161A46C000D94B2E /* ToStringSerializerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToStringSerializerProtocol.h; sourceTree = "<group>"; };
+		94DFF8A4161A46C000D94B2E /* World.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = World.h; sourceTree = "<group>"; };
+		94DFF8A5161A46C000D94B2E /* World.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = World.m; sourceTree = "<group>"; };
+		94DFF8AD161A473200D94B2E /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		94DFF8AE161A473200D94B2E /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		94DFF8AF161A473200D94B2E /* MasterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterViewController.xib; sourceTree = "<group>"; };
+		94DFF8B2161A484E00D94B2E /* InfectableNonLinearBugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfectableNonLinearBugView.h; sourceTree = "<group>"; };
+		94DFF8B3161A484E00D94B2E /* InfectableNonLinearBugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfectableNonLinearBugView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +266,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		94DFF866161A468000D94B2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94DFF86B161A468100D94B2E /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -203,6 +284,7 @@
 				94540AF1160597A200C84C5D /* Bhumi */,
 				949034E81610E13F0003C023 /* InfectableBugRenderer */,
 				949035051610E13F0003C023 /* InfectableBugRendererTests */,
+				94DFF86C161A468100D94B2E /* InfectableNonLinearBugRenderer */,
 				94540AEE160597A200C84C5D /* Frameworks */,
 				94540AEC160597A200C84C5D /* Products */,
 			);
@@ -214,6 +296,7 @@
 				94540AEB160597A200C84C5D /* Bhumi */,
 				949034E51610E13F0003C023 /* InfectableBugRenderer.app */,
 				949034FF1610E13F0003C023 /* InfectableBugRendererTests.octest */,
+				94DFF869161A468000D94B2E /* InfectableNonLinearBugRenderer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -278,6 +361,9 @@
 		94540B13160597DD00C84C5D /* domain */ = {
 			isa = PBXGroup;
 			children = (
+				6B058EA20CA9E4C867AC017F /* InfectableNonLinearBugState.h */,
+				6B05819E10C48939D564AC39 /* InfectableNonLinearBug.h */,
+				6B058C05B68F854FD728DF25 /* InfectableNonLinearBug.m */,
 				6B058739FAB34A99AAB5A8F9 /* InfectableBugJsonSerializer.m */,
 				6B0585821B1D8C5FD42C2B62 /* InfectableBugJsonSerializer.h */,
 				94540B14160597DD00C84C5D /* InfectableBug.h */,
@@ -392,6 +478,81 @@
 			path = ../../src/objc/domain;
 			sourceTree = "<group>";
 		};
+		94DFF86C161A468100D94B2E /* InfectableNonLinearBugRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				94DFF893161A46C000D94B2E /* framework */,
+				94DFF882161A46AA00D94B2E /* domain */,
+				94DFF878161A468100D94B2E /* AppDelegate.h */,
+				94DFF879161A468100D94B2E /* AppDelegate.m */,
+				94DFF87B161A468100D94B2E /* MainMenu.xib */,
+				94DFF86D161A468100D94B2E /* Supporting Files */,
+				94DFF8AD161A473200D94B2E /* MasterViewController.h */,
+				94DFF8AE161A473200D94B2E /* MasterViewController.m */,
+				94DFF8AF161A473200D94B2E /* MasterViewController.xib */,
+				94DFF8B2161A484E00D94B2E /* InfectableNonLinearBugView.h */,
+				94DFF8B3161A484E00D94B2E /* InfectableNonLinearBugView.m */,
+			);
+			path = InfectableNonLinearBugRenderer;
+			sourceTree = "<group>";
+		};
+		94DFF86D161A468100D94B2E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94DFF86E161A468100D94B2E /* InfectableNonLinearBugRenderer-Info.plist */,
+				94DFF86F161A468100D94B2E /* InfoPlist.strings */,
+				94DFF872161A468100D94B2E /* main.m */,
+				94DFF874161A468100D94B2E /* InfectableNonLinearBugRenderer-Prefix.pch */,
+				94DFF875161A468100D94B2E /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94DFF882161A46AA00D94B2E /* domain */ = {
+			isa = PBXGroup;
+			children = (
+				94DFF883161A46AA00D94B2E /* InfectableBug.h */,
+				94DFF884161A46AA00D94B2E /* InfectableBug.m */,
+				94DFF885161A46AA00D94B2E /* InfectableBugJsonSerializer.h */,
+				94DFF886161A46AA00D94B2E /* InfectableBugJsonSerializer.m */,
+				94DFF887161A46AA00D94B2E /* InfectableNonLinearBug.h */,
+				94DFF888161A46AA00D94B2E /* InfectableNonLinearBug.m */,
+				94DFF889161A46AA00D94B2E /* InfectableNonLinearBugState.h */,
+				94DFF88A161A46AA00D94B2E /* RandomBug.h */,
+				94DFF88B161A46AA00D94B2E /* RandomBug.m */,
+				94DFF88C161A46AA00D94B2E /* RandomBugJsonSerializer.h */,
+				94DFF88D161A46AA00D94B2E /* RandomBugJsonSerializer.m */,
+			);
+			name = domain;
+			path = ../../src/objc/domain;
+			sourceTree = "<group>";
+		};
+		94DFF893161A46C000D94B2E /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				94DFF894161A46C000D94B2E /* Bug.h */,
+				94DFF895161A46C000D94B2E /* Bug.m */,
+				94DFF896161A46C000D94B2E /* BugProtocol.h */,
+				94DFF897161A46C000D94B2E /* BugToStringSerializer.h */,
+				94DFF898161A46C000D94B2E /* BugToStringSerializer.m */,
+				94DFF899161A46C000D94B2E /* InterceptorProtocol.h */,
+				94DFF89A161A46C000D94B2E /* JsonInterceptor.h */,
+				94DFF89B161A46C000D94B2E /* JsonInterceptor.m */,
+				94DFF89C161A46C000D94B2E /* NSMutableArray+Shuffle.h */,
+				94DFF89D161A46C000D94B2E /* NSMutableArray+Shuffle.m */,
+				94DFF89E161A46C000D94B2E /* SerializerFormat.h */,
+				94DFF89F161A46C000D94B2E /* SerializerFormat.m */,
+				94DFF8A0161A46C000D94B2E /* SerializerFormatProtocol.h */,
+				94DFF8A1161A46C000D94B2E /* SerializerFormats.h */,
+				94DFF8A2161A46C000D94B2E /* SerializerFormats.m */,
+				94DFF8A3161A46C000D94B2E /* ToStringSerializerProtocol.h */,
+				94DFF8A4161A46C000D94B2E /* World.h */,
+				94DFF8A5161A46C000D94B2E /* World.m */,
+			);
+			name = framework;
+			path = ../../src/objc/framework;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -448,6 +609,23 @@
 			productReference = 949034FF1610E13F0003C023 /* InfectableBugRendererTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		94DFF868161A468000D94B2E /* InfectableNonLinearBugRenderer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94DFF880161A468100D94B2E /* Build configuration list for PBXNativeTarget "InfectableNonLinearBugRenderer" */;
+			buildPhases = (
+				94DFF865161A468000D94B2E /* Sources */,
+				94DFF866161A468000D94B2E /* Frameworks */,
+				94DFF867161A468000D94B2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InfectableNonLinearBugRenderer;
+			productName = InfectableNonLinearBugRenderer;
+			productReference = 94DFF869161A468000D94B2E /* InfectableNonLinearBugRenderer.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -472,6 +650,7 @@
 				94540AEA160597A200C84C5D /* Bhumi */,
 				949034E41610E13F0003C023 /* InfectableBugRenderer */,
 				949034FE1610E13F0003C023 /* InfectableBugRendererTests */,
+				94DFF868161A468000D94B2E /* InfectableNonLinearBugRenderer */,
 			);
 		};
 /* End PBXProject section */
@@ -493,6 +672,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				9490350A1610E13F0003C023 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94DFF867161A468000D94B2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94DFF871161A468100D94B2E /* InfoPlist.strings in Resources */,
+				94DFF877161A468100D94B2E /* Credits.rtf in Resources */,
+				94DFF87D161A468100D94B2E /* MainMenu.xib in Resources */,
+				94DFF8B1161A473200D94B2E /* MasterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,6 +721,7 @@
 				6B058DD9B2FF9ABFCADC2AF8 /* InfectableBugJsonSerializer.m in Sources */,
 				6B05880B476176CF963ED8BA /* SerializerFormats.m in Sources */,
 				6B0586283A8FCC84668DAC5E /* SerializerFormat.m in Sources */,
+				6B058A7724C899AEC3285BF6 /* InfectableNonLinearBug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +744,7 @@
 				9490355A16112CD90003C023 /* InfectableBugJsonSerializer.m in Sources */,
 				9490355B16112CD90003C023 /* RandomBug.m in Sources */,
 				9490355C16112CD90003C023 /* RandomBugJsonSerializer.m in Sources */,
+				6B0587824C8B614D7D6DB15E /* InfectableNonLinearBug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +753,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				9490350D1610E13F0003C023 /* InfectableBugRendererTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94DFF865161A468000D94B2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94DFF873161A468100D94B2E /* main.m in Sources */,
+				94DFF87A161A468100D94B2E /* AppDelegate.m in Sources */,
+				94DFF88E161A46AA00D94B2E /* InfectableBug.m in Sources */,
+				94DFF88F161A46AA00D94B2E /* InfectableBugJsonSerializer.m in Sources */,
+				94DFF890161A46AA00D94B2E /* InfectableNonLinearBug.m in Sources */,
+				94DFF891161A46AA00D94B2E /* RandomBug.m in Sources */,
+				94DFF892161A46AA00D94B2E /* RandomBugJsonSerializer.m in Sources */,
+				94DFF8A6161A46C000D94B2E /* Bug.m in Sources */,
+				94DFF8A7161A46C000D94B2E /* BugToStringSerializer.m in Sources */,
+				94DFF8A8161A46C000D94B2E /* JsonInterceptor.m in Sources */,
+				94DFF8A9161A46C000D94B2E /* NSMutableArray+Shuffle.m in Sources */,
+				94DFF8AA161A46C000D94B2E /* SerializerFormat.m in Sources */,
+				94DFF8AB161A46C000D94B2E /* SerializerFormats.m in Sources */,
+				94DFF8AC161A46C000D94B2E /* World.m in Sources */,
+				94DFF8B0161A473200D94B2E /* MasterViewController.m in Sources */,
+				94DFF8B4161A484E00D94B2E /* InfectableNonLinearBugView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +820,30 @@
 				949035091610E13F0003C023 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		94DFF86F161A468100D94B2E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94DFF870161A468100D94B2E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		94DFF875161A468100D94B2E /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94DFF876161A468100D94B2E /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		94DFF87B161A468100D94B2E /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94DFF87C161A468100D94B2E /* en */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -735,6 +974,30 @@
 			};
 			name = Release;
 		};
+		94DFF87E161A468100D94B2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "InfectableNonLinearBugRenderer/InfectableNonLinearBugRenderer-Prefix.pch";
+				INFOPLIST_FILE = "InfectableNonLinearBugRenderer/InfectableNonLinearBugRenderer-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		94DFF87F161A468100D94B2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "InfectableNonLinearBugRenderer/InfectableNonLinearBugRenderer-Prefix.pch";
+				INFOPLIST_FILE = "InfectableNonLinearBugRenderer/InfectableNonLinearBugRenderer-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -773,6 +1036,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		94DFF880161A468100D94B2E /* Build configuration list for PBXNativeTarget "InfectableNonLinearBugRenderer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94DFF87E161A468100D94B2E /* Debug */,
+				94DFF87F161A468100D94B2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

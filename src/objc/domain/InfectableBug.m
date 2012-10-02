@@ -44,7 +44,8 @@ infectionStartIteration: (NSUInteger) anInfectionStartIteration {
 //        NSLog(@"infection started in iteration %i. Current iteration is %i. Incubation period is %i. Iterations since infection is %i", infectionStartIteration, [self.world currentIteration], incubationPeriod, [self.world currentIteration] - infectionStartIteration);
 //    }
 
-    if(infected && ([self.world currentIteration] - infectionStartIteration) > incubationPeriod) {
+    NSInteger iterationDelta = [self.world currentIteration] - infectionStartIteration;
+    if(infected && iterationDelta > (NSInteger) incubationPeriod) {
 
 //        NSLog(@"Going to find bugs to infect!");
 
@@ -94,8 +95,8 @@ infectionStartIteration: (NSUInteger) anInfectionStartIteration {
                 NSInteger scanX = self.x + _x;
                 NSInteger scanY = self.y + _y;
 
-                scanX %= rows; if(scanX < 0) scanX += rows;
-                scanY %= columns; if(scanY < 0) scanY += columns;
+                scanX %= columns; if(scanX < 0) scanX += columns;
+                scanY %= rows; if(scanY < 0) scanY += rows;
 
                 double distance = sqrt((_x * _x) + (_y * _y));
 

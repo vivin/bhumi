@@ -2,7 +2,7 @@
 //  MasterViewController.m
 //  Bhumi
 //
-//  Created by Vivin Paliath on 9/24/12.
+//  Created by Vivin Paliath on 10/1/12.
 //  Copyright (c) 2012 Vivin Paliath. All rights reserved.
 //
 
@@ -39,9 +39,9 @@
                                                incubationPeriod: 10
                                         infectionStartIteration: 0]];
         }
-        
+
         NSLog(@"Added all bugs. Going to add infected");
-        
+
         [world addBug: [[InfectableBug alloc] initWithWorld: world
                                                        name: @"InfectedBug"
                                                       layer: @"FirstLayer"
@@ -54,7 +54,7 @@
 
         //[world start];
     }
-    
+
     return self;
 }
 
@@ -63,3 +63,4 @@
 }
 
 @end
+
