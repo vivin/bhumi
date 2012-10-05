@@ -10,7 +10,7 @@ int main(void) {
          // Set permissions for our NSLog file
         //umask(022);
         // Send stderr to our file
-        FILE *newStderr = freopen("/tmp/bhumi.log", "a", stderr);
+        //FILE *newStderr = freopen("/tmp/bhumi.log", "a", stderr);
 
         World* world = [[World alloc] initWithName: @"Bhumi"
                                               rows: 100

@@ -10,5 +10,6 @@
 
 int main(int argc, char *argv[])
 {
+    //FILE *newStderr = freopen("/Users/vivin/nslog.txt", "a", stderr);
     return NSApplicationMain(argc, (const char **)argv);
 }

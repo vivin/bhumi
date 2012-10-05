@@ -70,90 +70,99 @@
     }
 
     if(self.alive == YES) {
-        if(state != INFECTIOUS) {
 
-            NSMutableArray* possibleDirectionDeltas = [[NSMutableArray alloc] init];
+        NSMutableArray* possibleDirectionDeltas = [[NSMutableArray alloc] init];
 
-            struct FixedPoint topLeft;
-            topLeft.x = -1;
-            topLeft.y = -1;
+        struct FixedPoint topLeft;
+        topLeft.x = -1;
+        topLeft.y = -1;
 
-            struct FixedPoint top;
-            top.x = 0;
-            top.y = -1;
+        struct FixedPoint top;
+        top.x = 0;
+        top.y = -1;
 
-            struct FixedPoint topRight;
-            topRight.x = 1;
-            topRight.y = -1;
+        struct FixedPoint topRight;
+        topRight.x = 1;
+        topRight.y = -1;
 
-            struct FixedPoint left;
-            left.x = -1;
-            left.y = 0;
+        struct FixedPoint left;
+        left.x = -1;
+        left.y = 0;
 
-            struct FixedPoint right;
-            right.x = 1;
-            right.y = 0;
+        struct FixedPoint right;
+        right.x = 1;
+        right.y = 0;
 
-            struct FixedPoint bottomLeft;
-            bottomLeft.x = -1;
-            bottomLeft.y = 1;
+        struct FixedPoint bottomLeft;
+        bottomLeft.x = -1;
+        bottomLeft.y = 1;
 
-            struct FixedPoint bottom;
-            bottom.x = 0;
-            bottom.y = 1;
+        struct FixedPoint bottom;
+        bottom.x = 0;
+        bottom.y = 1;
 
-            struct FixedPoint bottomRight;
-            bottomRight.x = 1;
-            bottomRight.y = 1;
+        struct FixedPoint bottomRight;
+        bottomRight.x = 1;
+        bottomRight.y = 1;
 
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &topLeft objCType: @encode(FixedPoint)]];
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &top objCType: @encode(FixedPoint)]];
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &topRight objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &topLeft objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &top objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &topRight objCType: @encode(FixedPoint)]];
 
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &left objCType: @encode(FixedPoint)]];
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &right objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &left objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &right objCType: @encode(FixedPoint)]];
 
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottomLeft objCType: @encode(FixedPoint)]];
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottom objCType: @encode(FixedPoint)]];
-            [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottomRight objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottomLeft objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottom objCType: @encode(FixedPoint)]];
+        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottomRight objCType: @encode(FixedPoint)]];
 
-            [possibleDirectionDeltas shuffle];
+        [possibleDirectionDeltas shuffle];
 
-            NSArray* bugs = [self scanForState: INFECTIOUS withinRadius: alertRadius];
+        NSArray* bugs = [self scanForState: INFECTIOUS withinRadius: alertRadius];
 
-            NSUInteger rows = [self.world rows];
-            NSUInteger columns = [self.world columns];
+        NSUInteger rows = [self.world rows];
+        NSUInteger columns = [self.world columns];
 
-            if([bugs count] > 0 && state != IMMUNE) {
+        if([bugs count] > 0 && state != IMMUNE) {
 
-                NSMutableArray* distancesFromCurrentPosition = [[NSMutableArray alloc] init];
-                NSEnumerator* bugEnumerator = [bugs objectEnumerator];
-                InfectableNonLinearBug* bug;
+            NSMutableArray* distancesFromCurrentPosition = [[NSMutableArray alloc] init];
+            NSEnumerator* bugEnumerator = [bugs objectEnumerator];
+            InfectableNonLinearBug* bug;
 
-                while((bug = [bugEnumerator nextObject])) {
-                    NSInteger dx = self.x - [bug x];
-                    NSInteger dy = self.y - [bug y];
-                    NSNumber* distance = [NSNumber numberWithDouble: sqrt((dx * dx) + (dy * dy))];
+            //NSLog(@"%@ needs to get out of here", self.name);
+            //NSLog(@"%@ state is %@ and is at %lu:%lu", self.name, state == HEALTHY ? @"healthy" : @"infected", self.x, self.y);
 
-                    [distancesFromCurrentPosition addObject: distance];
-                }
+            while((bug = [bugEnumerator nextObject])) {
+                NSInteger dx = self.x - [bug x];
+                NSInteger dy = self.y - [bug y];
+                NSNumber* distance = [NSNumber numberWithDouble: sqrt((dx * dx) + (dy * dy))];
 
-                NSUInteger numberOfFurtherPoints = 0;
-                struct FixedPoint furthest;
-                NSEnumerator* directionDeltaEnumerator = [possibleDirectionDeltas objectEnumerator];
-                NSValue* directionDeltaValue;
+                [distancesFromCurrentPosition addObject: distance];
+            }
 
-                while ((directionDeltaValue = [directionDeltaEnumerator nextObject])) {
+            NSUInteger numberOfFurtherPoints = 0;
+            struct FixedPoint furthest;
+            furthest.x = 0;
+            furthest.y = 0;
 
-                    struct FixedPoint directionDelta;
-                    [directionDeltaValue getValue: &directionDelta];
-                    NSMutableArray* distancesFromDeltaPosition = [[NSMutableArray alloc] init];
+            NSEnumerator* directionDeltaEnumerator = [possibleDirectionDeltas objectEnumerator];
+            NSValue* directionDeltaValue;
+            BOOL furthestPointFound = NO;
 
-                    NSInteger _x = self.x + directionDelta.x;
-                    NSInteger _y = self.y + directionDelta.y;
+            while ((directionDeltaValue = [directionDeltaEnumerator nextObject])) {
 
-                    _x %= columns; if(_x < 0) _x += columns;
-                    _y %= rows; if(_y < 0) _y += rows;
+                struct FixedPoint directionDelta;
+                [directionDeltaValue getValue: &directionDelta];
+
+                NSMutableArray* distancesFromDeltaPosition = [[NSMutableArray alloc] init];
+
+                NSInteger _x = self.x + directionDelta.x;
+                NSInteger _y = self.y + directionDelta.y;
+
+                _x %= columns; if(_x < 0) _x += columns;
+                _y %= rows; if(_y < 0) _y += rows;
+
+                if([self.world isLocationOccupiedInLayer: self.layer atX: (NSUInteger) _x atY: (NSUInteger) _y] == NO) {
 
                     bugEnumerator = [bugs objectEnumerator];
                     while((bug = [bugEnumerator nextObject])) {
@@ -175,42 +184,45 @@
                         furthest.x = _x;
                         furthest.y = _y;
                         numberOfFurtherPoints = numberOfFurtherPointsForDelta;
+                        furthestPointFound = YES;
                     }
                 }
-
-                self.x = furthest.x;
-                self.y = furthest.y;
-
-            } else {
-
-                NSUInteger i = 0;
-                BOOL found = NO;
-
-                do {
-
-                    NSInteger _x = self.x;
-                    NSInteger _y = self.y;
-
-                    struct FixedPoint point;
-                    [[possibleDirectionDeltas objectAtIndex: i] getValue: &point];
-
-                    _x += point.x;
-                    _y += point.y;
-
-                    _x %= columns; if(_x < 0) _x += columns;
-                    _y %= rows; if(_y < 0) _y += rows;
-
-                    found = ![self.world isLocationOccupiedInLayer: self.layer atX: _x atY: _y];
-
-                    if(found) {
-                        self.x = _x;
-                        self.y = _y;
-                    }
-
-                    i++;
-
-                } while(!found && i < [possibleDirectionDeltas count]);
             }
+
+            if(furthestPointFound == YES) {
+                self.x = (NSUInteger) furthest.x;
+                self.y = (NSUInteger) furthest.y;
+            }
+
+        } else {
+
+            NSUInteger i = 0;
+            BOOL found = NO;
+
+            do {
+
+                NSInteger _x = self.x;
+                NSInteger _y = self.y;
+
+                struct FixedPoint point;
+                [[possibleDirectionDeltas objectAtIndex: i] getValue: &point];
+
+                _x += point.x;
+                _y += point.y;
+
+                _x %= columns; if(_x < 0) _x += columns;
+                _y %= rows; if(_y < 0) _y += rows;
+
+                found = ([self.world isLocationOccupiedInLayer: self.layer atX: _x atY: _y] == NO);
+
+                if(found) {
+                    self.x = _x;
+                    self.y = _y;
+                }
+
+                i++;
+
+            } while(!found && i < [possibleDirectionDeltas count]);
         }
     }
 }

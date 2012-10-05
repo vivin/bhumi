@@ -52,6 +52,19 @@
 
         [_worldView setWorld: world];
 
+        NSArray* bugs = [world bugs];
+        NSEnumerator* bugEnumerator = [bugs objectEnumerator];
+        Bug* bug;
+
+        NSLog(@"Sanity check!");
+        while((bug = [bugEnumerator nextObject])) {
+            Bug* oBug = [world getBugInLayer: [bug layer] atX: [bug x] atY: [bug y]];
+
+            if(oBug != bug) {
+                NSLog(@"Bug %@ says its location is %lu:%lu, but the bug at that location is %@", [bug name], [bug x], [bug y], [oBug name]);
+            }
+        }
+
         //[world start];
     }
 
