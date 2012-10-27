@@ -411,9 +411,6 @@
 
             currentIteration++;
 
-            NSLog(@"Iteration DONE!<<<<<<<<<<<<<<<<<<<<<<<<");
-
-            
             //struct timespec time;
             //time.tv_sec  = 0;
             //time.tv_nsec = 500000000L;

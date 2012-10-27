@@ -25,12 +25,12 @@
         //NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath: @"/Users/vivin/locs.txt"];
 
         World* world = [[World alloc] initWithName: @"Bhumi"
-                                              rows: 96
-                                           columns: 128
-                                        iterations: 2000
+                                              rows: 768
+                                           columns: 1024
+                                        iterations: 1500
                                   snapshotInterval: 1
                                        interceptor: _infectableNonLinearBugView];
-        for(int i = 0; i < 2303; i++) {
+        for(int i = 0; i < 33332; i++) {
             NSMutableString* name = [NSMutableString stringWithString: @"HealthyBug"];
             [name appendString: [[NSNumber numberWithInt: i] stringValue]];
             [world addBug: [[InfectableNonLinearBug alloc] initWithWorld: world
@@ -38,37 +38,10 @@
                                                           layer: @"FirstLayer"
                                                           state: HEALTHY
                                                incubationPeriod: 5
-                                                infectionPeriod: 5
+                                                infectionPeriod: 50
                                                 infectionRadius: 3
                                                     alertRadius: 3
                                                   mortalityRate: 25]];
-            /*
-            NSMutableString* str = [NSMutableString stringWithString:  @""];
-            for(NSUInteger a = 0; a < 128; a++) {
-                for(NSUInteger b = 0; b < 96; b++) {
-                    if([world isLocationOccupiedInLayer: @"FirstLayer" atX: a atY: b] == YES) {
-                        [str appendString: [NSString stringWithFormat: @"%li:%li:%@#", a, b, @"y"]];
-                    } else {
-                        [str appendString: [NSString stringWithFormat: @"%li:%li:%@#", a, b, @"n"]];
-                    }
-                }
-            } */
-
-            //[str appendString: @"\n"];
-            //[fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
-            /*
-            NSArray* bugs = [world bugs];
-            NSEnumerator* bugEnumerator = [bugs objectEnumerator];
-            Bug* bug;
-
-            NSLog(@"Sanity check!");
-            while((bug = [bugEnumerator nextObject])) {
-                Bug* oBug = [world getBugInLayer: [bug layer] atX: [bug x] atY: [bug y]];
-
-                if(oBug != bug) {
-                    NSLog(@"Bug %@ says its location is %lu:%lu, but the bug at that location is %@", [bug name], [bug x], [bug y], [oBug name]);
-                }
-            } */
         }
 
         //[fileHandle closeFile];

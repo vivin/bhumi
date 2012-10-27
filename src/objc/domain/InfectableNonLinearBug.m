@@ -33,6 +33,40 @@
         if(state == INFECTED || state == INFECTIOUS) {
             infectionStartIteration = 1;
         }
+
+        _possibleDirectionDeltas = [[NSMutableArray alloc] init];
+        _alertScanLocationDeltas = [[NSMutableArray alloc] init];
+        _infectionScanLocationDeltas = [[NSMutableArray alloc] init];
+
+        for(NSInteger _x = -1; _x <= 1; _x++) {
+            for(NSInteger _y = -1; _y <= 1; _y++) {
+                struct FixedPoint possibleDirectionPoint;
+                possibleDirectionPoint.x = _x;
+                possibleDirectionPoint.y = _y;
+
+               [_possibleDirectionDeltas addObject: [NSValue valueWithBytes: &possibleDirectionPoint objCType: @encode(FixedPoint)]];
+            }
+        }
+                                   
+        for(NSInteger _x = (NSInteger) alertRadius * -1; _x <= (NSInteger) alertRadius; _x++) {
+            for(NSInteger _y = (NSInteger) alertRadius * -1; _y <= (NSInteger) alertRadius; _y++) {
+                struct FixedPoint alertScanPoint;
+                alertScanPoint.x = _x;
+                alertScanPoint.y = _y;
+
+               [_alertScanLocationDeltas addObject: [NSValue valueWithBytes: &alertScanPoint objCType: @encode(FixedPoint)]];
+            }
+        }
+
+        for(NSInteger _x = (NSInteger) infectionRadius * -1; _x <= (NSInteger) infectionRadius; _x++) {
+            for(NSInteger _y = (NSInteger) infectionRadius * -1; _y <= (NSInteger) infectionRadius; _y++) {
+                struct FixedPoint infectionScanPoint;
+                infectionScanPoint.x = _x;
+                infectionScanPoint.y = _y;
+
+               [_infectionScanLocationDeltas addObject: [NSValue valueWithBytes: &infectionScanPoint objCType: @encode(FixedPoint)]];
+            }
+        }
     }
 
     return self;
@@ -49,7 +83,7 @@
     if((state == INFECTED || state == INFECTIOUS) && iterationDelta > (NSInteger) incubationPeriod) {
         state = INFECTIOUS;
 
-        NSArray* bugs = [self scanForState: HEALTHY withinRadius: infectionRadius];
+        NSArray* bugs = [self scanForState: HEALTHY];
         //NSLog(@"Found %li infectable bugs", [bugs count]);
 
         NSEnumerator* bugEnumerator = [bugs objectEnumerator];
@@ -71,54 +105,9 @@
 
     if(self.alive == YES) {
 
-        NSMutableArray* possibleDirectionDeltas = [[NSMutableArray alloc] init];
+        [_possibleDirectionDeltas shuffle];
 
-        struct FixedPoint topLeft;
-        topLeft.x = -1;
-        topLeft.y = -1;
-
-        struct FixedPoint top;
-        top.x = 0;
-        top.y = -1;
-
-        struct FixedPoint topRight;
-        topRight.x = 1;
-        topRight.y = -1;
-
-        struct FixedPoint left;
-        left.x = -1;
-        left.y = 0;
-
-        struct FixedPoint right;
-        right.x = 1;
-        right.y = 0;
-
-        struct FixedPoint bottomLeft;
-        bottomLeft.x = -1;
-        bottomLeft.y = 1;
-
-        struct FixedPoint bottom;
-        bottom.x = 0;
-        bottom.y = 1;
-
-        struct FixedPoint bottomRight;
-        bottomRight.x = 1;
-        bottomRight.y = 1;
-
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &topLeft objCType: @encode(FixedPoint)]];
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &top objCType: @encode(FixedPoint)]];
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &topRight objCType: @encode(FixedPoint)]];
-
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &left objCType: @encode(FixedPoint)]];
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &right objCType: @encode(FixedPoint)]];
-
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottomLeft objCType: @encode(FixedPoint)]];
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottom objCType: @encode(FixedPoint)]];
-        [possibleDirectionDeltas addObject: [NSValue valueWithBytes: &bottomRight objCType: @encode(FixedPoint)]];
-
-        [possibleDirectionDeltas shuffle];
-
-        NSArray* bugs = [self scanForState: INFECTIOUS withinRadius: alertRadius];
+        NSArray* bugs = [self scanForState: INFECTIOUS];
 
         NSUInteger rows = [self.world rows];
         NSUInteger columns = [self.world columns];
@@ -145,7 +134,7 @@
             furthest.x = 0;
             furthest.y = 0;
 
-            NSEnumerator* directionDeltaEnumerator = [possibleDirectionDeltas objectEnumerator];
+            NSEnumerator* directionDeltaEnumerator = [_possibleDirectionDeltas objectEnumerator];
             NSValue* directionDeltaValue;
             BOOL furthestPointFound = NO;
 
@@ -205,7 +194,7 @@
                 NSInteger _y = self.y;
 
                 struct FixedPoint point;
-                [[possibleDirectionDeltas objectAtIndex: i] getValue: &point];
+                [[_possibleDirectionDeltas objectAtIndex: i] getValue: &point];
 
                 _x += point.x;
                 _y += point.y;
@@ -222,49 +211,58 @@
 
                 i++;
 
-            } while(!found && i < [possibleDirectionDeltas count]);
+            } while(!found && i < [_possibleDirectionDeltas count]);
         }
     }
 }
 
-- (NSArray *) scanForState: (InfectableNonLinearBugState) bugState withinRadius: (NSUInteger) radius {
+- (NSArray *) scanForState: (InfectableNonLinearBugState) bugState {
     NSMutableArray* bugsWithStateWithinInfectionRadius = [[NSMutableArray alloc] init];
 
-    for(NSInteger _x = (NSInteger) radius * -1; _x <= (NSInteger) radius; _x++) {
-        for(NSInteger _y = (NSInteger) radius * -1; _y <= (NSInteger) radius; _y++) {
+    NSMutableArray* scanLocationDeltas;
 
-            //NSLog(@"Examining %li, %li", _x, _y);
+    if(bugState == HEALTHY) {
+        scanLocationDeltas = _alertScanLocationDeltas;
+    } else {
+        scanLocationDeltas = _infectionScanLocationDeltas;
+    }
 
-            NSInteger rows = [self.world rows];
-            NSInteger columns = [self.world columns];
+    NSEnumerator* scanLocationDeltaEnumerator = [scanLocationDeltas objectEnumerator];
+    NSValue* scanLocationDeltaValue;
 
-            NSInteger scanX = self.x + _x;
-            NSInteger scanY = self.y + _y;
+    while((scanLocationDeltaValue = [scanLocationDeltaEnumerator nextObject])) {
+        struct FixedPoint scanLocationDelta;
+        [scanLocationDeltaValue getValue: &scanLocationDelta];
 
-            scanX %= columns; if(scanX < 0) scanX += columns;
-            scanY %= rows; if(scanY < 0) scanY += rows;
+        NSInteger rows = [self.world rows];
+        NSInteger columns = [self.world columns];
 
-            double distance = sqrt((_x * _x) + (_y * _y));
+        NSInteger scanX = self.x + scanLocationDelta.x;
+        NSInteger scanY = self.y + scanLocationDelta.y;
 
-            //NSLog(@"Checking %i:%i. Distance to that location is %f", scanX, scanY, distance);
+        scanX %= columns; if(scanX < 0) scanX += columns;
+        scanY %= rows; if(scanY < 0) scanY += rows;
 
-            if(distance <= infectionRadius && distance > 0) {
-                NSArray* bugs = [self.world getBugsAtX: (NSUInteger) scanX atY: (NSUInteger) scanY];
+        double distance = sqrt((scanLocationDelta.x * scanLocationDelta.x) + (scanLocationDelta.y * scanLocationDelta.y));
 
-                //NSLog(@"Distance is smaller than infection radius. The number of bugs at this location is %i", [bugs count]);
+        //NSLog(@"Checking %i:%i. Distance to that location is %f", scanX, scanY, distance);
 
-                if([bugs count] > 0) {
-                    //Let's only get the uninfected bugs
+        if(distance <= infectionRadius && distance > 0) {
+            NSArray* bugs = [self.world getBugsAtX: (NSUInteger) scanX atY: (NSUInteger) scanY];
 
-                    NSEnumerator* bugEnumerator = [bugs objectEnumerator];
-                    InfectableNonLinearBug* bug;
+            //NSLog(@"Distance is smaller than infection radius. The number of bugs at this location is %i", [bugs count]);
 
-                    while((bug = [bugEnumerator nextObject])) {
-                        //NSLog(@"%@ infected: %@", [bug name], [bug infected] ? @"yes" : @"no");
-                        if([bug state] == bugState) {
-                            //NSLog(@"Bug in that location is not infected so I am going to add");
-                            [bugsWithStateWithinInfectionRadius addObject: bug];
-                        }
+            if([bugs count] > 0) {
+                //Let's only get the uninfected bugs
+
+                NSEnumerator* bugEnumerator = [bugs objectEnumerator];
+                InfectableNonLinearBug* bug;
+
+                while((bug = [bugEnumerator nextObject])) {
+                    //NSLog(@"%@ infected: %@", [bug name], [bug infected] ? @"yes" : @"no");
+                    if([bug state] == bugState) {
+                        //NSLog(@"Bug in that location is not infected so I am going to add");
+                        [bugsWithStateWithinInfectionRadius addObject: bug];
                     }
                 }
             }

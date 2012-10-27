@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>InfectableNonLinearBugMobileRenderer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>InfectableNonLinearBugRenderer.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -27,6 +32,26 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>943DD031163C75220009F4E1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>943DD0AB163C767F0009F4E1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>943DD0D4163C76D10009F4E1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>943DD117163C77F70009F4E1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>94540AEA160597A200C84C5D</key>
 		<dict>
 			<key>primary</key>

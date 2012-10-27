@@ -21,6 +21,9 @@
     @property(readonly) NSUInteger infectionRadius;
     @property(readonly) NSUInteger alertRadius;
     @property(readonly) NSUInteger mortalityRate;
+    @property NSMutableArray* possibleDirectionDeltas;
+    @property NSMutableArray* alertScanLocationDeltas;
+    @property NSMutableArray* infectionScanLocationDeltas;
 
 - (id) initWithWorld: (World *) aWorld
                 name: (NSString *) aName
