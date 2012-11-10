@@ -13,7 +13,6 @@
 
 @interface WorldView : NSView <InterceptorProtocol>
     @property World* world;
-    @property NSObject* lock;
     @property NSInteger numInfected;
 
 - (void) refreshView;

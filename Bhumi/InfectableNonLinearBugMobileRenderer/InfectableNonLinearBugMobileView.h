@@ -14,7 +14,6 @@
 @interface InfectableNonLinearBugMobileView : UIView <InterceptorProtocol>
 
 @property World* world;
-@property NSObject* lock;
 
 - (void) refreshView;
 

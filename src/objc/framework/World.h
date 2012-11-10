@@ -22,11 +22,11 @@
 
 @property(readonly) BOOL running;
 
+@property BOOL wait;
+
 @property(readonly) id <InterceptorProtocol> interceptor;
 
 - (id) init;
-
-//TODO: instead of having just one interceptor, consider having a bunch of interceptors
 
 - (id) initWithName: (NSString *) aName
                rows: (NSUInteger) aRows
@@ -78,6 +78,8 @@
                            atY: (NSUInteger) atY;
 
 - (void) clearLayer: (NSString *) layer;
+
+- (void) step;
 
 - (void) clear;
 

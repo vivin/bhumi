@@ -28,6 +28,7 @@
         currentIteration = 0;
         iterations = 0;
         snapshotInterval = 0;
+        _wait = YES;
     }
 
     return self;
@@ -41,7 +42,7 @@
         interceptor: (id <InterceptorProtocol>) anInterceptor {
 
     self = [super init];
-    self =[self init];
+    self = [self init];
 
     if (self) {
         name = aName;
@@ -350,6 +351,10 @@
     [grid removeObjectForKey: layer];
 }
 
+- (void) step {
+    _wait = NO;
+}
+
 - (void) clear {
     [grid removeAllObjects];
     [layerBugDictionary removeAllObjects];
@@ -363,6 +368,8 @@
     running = YES;
 
     while(currentIteration < iterations) {
+
+        _wait = YES;
 
         @autoreleasepool {
 
@@ -410,12 +417,9 @@
             }
 
             currentIteration++;
+        }
 
-            //struct timespec time;
-            //time.tv_sec  = 0;
-            //time.tv_nsec = 500000000L;
-            //nanosleep(&time, NULL);
-
+        while(_wait == YES) {
         }
     }
 

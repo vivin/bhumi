@@ -121,6 +121,8 @@
     }
 
     printf("%s", [json UTF8String]);
+
+    [world step];
 }
 
 @end

@@ -22,15 +22,13 @@
     if (self) {
         _infectableNonLinearBugView = [[InfectableNonLinearBugView alloc] init];
 
-        //NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath: @"/Users/vivin/locs.txt"];
-
         World* world = [[World alloc] initWithName: @"Bhumi"
-                                              rows: 768
-                                           columns: 1024
+                                              rows: 96
+                                           columns: 128
                                         iterations: 1500
                                   snapshotInterval: 1
                                        interceptor: _infectableNonLinearBugView];
-        for(int i = 0; i < 33332; i++) {
+        for(int i = 0; i < 1999; i++) {
             NSMutableString* name = [NSMutableString stringWithString: @"HealthyBug"];
             [name appendString: [[NSNumber numberWithInt: i] stringValue]];
             [world addBug: [[InfectableNonLinearBug alloc] initWithWorld: world
@@ -73,8 +71,6 @@
                 NSLog(@"Bug %@ says its location is %lu:%lu, but the bug at that location is %@", [bug name], [bug x], [bug y], [oBug name]);
             }
         }
-
-        //[world start];
     }
 
     return self;
