@@ -28,7 +28,7 @@
                                         iterations: 1500
                                   snapshotInterval: 1
                                        interceptor: _infectableNonLinearBugView];
-        for(int i = 0; i < 1999; i++) {
+        for(int i = 0; i < 2999; i++) {
             NSMutableString* name = [NSMutableString stringWithString: @"HealthyBug"];
             [name appendString: [[NSNumber numberWithInt: i] stringValue]];
             [world addBug: [[InfectableNonLinearBug alloc] initWithWorld: world
@@ -37,8 +37,8 @@
                                                           state: HEALTHY
                                                incubationPeriod: 5
                                                 infectionPeriod: 50
-                                                infectionRadius: 3
-                                                    alertRadius: 3
+                                                infectionRadius: 1
+                                                    alertRadius: 1
                                                   mortalityRate: 25]];
         }
 
@@ -52,8 +52,8 @@
                                                           state: INFECTED
                                                incubationPeriod: 5
                                                 infectionPeriod: 5
-                                                infectionRadius: 3
-                                                    alertRadius: 3
+                                                infectionRadius: 1
+                                                    alertRadius: 1
                                                   mortalityRate: 25]];
 
         [_infectableNonLinearBugView setWorld: world];

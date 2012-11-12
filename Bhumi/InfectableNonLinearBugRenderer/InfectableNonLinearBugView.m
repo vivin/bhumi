@@ -85,6 +85,8 @@
 
         NSString* text = [NSString stringWithFormat:@"Iteration: %lu Healthy Bugs: %lu Infected Bugs: %lu Infectious Bugs: %lu Immune Bugs: %lu Total Bugs: %lu", [world currentIteration], numHealthy, numInfected, numInfectious, numImmune, [[world bugs] count]];
         CGContextShowTextAtPoint(myContext, 10, 748, [text UTF8String], [text length]);
+        
+        NSLog(@"iteration:%lu;healthy:%lu;infected:%lu;infectious:%lu;immune:%lu;total:%lu", [world currentIteration], numHealthy, numInfected, numInfectious, numImmune, [[world bugs] count]);
         [world step];
 
     } else {

@@ -34,13 +34,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../src/objc/framework/World.m"
-         timestampString = "370423819.882485"
+         timestampString = "374382090.012062"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "352"
-         endingLineNumber = "352"
-         landmarkName = "@implementation World"
-         landmarkType = "3">
+         startingLineNumber = "351"
+         endingLineNumber = "351"
+         landmarkName = "-clearLayer:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"

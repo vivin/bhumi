@@ -3,26 +3,56 @@
 
 @implementation RandomBug
 
+- (id) init {
+    if(self = [super init]) {
+        _possibleDirectionDeltas = [[NSMutableArray alloc] init];
+        for(NSInteger _x = -1; _x <= 1; _x++) {
+            for(NSInteger _y = -1; _y <= 1; _y++) {
+                struct FixedPoint possibleDirectionPoint;
+                possibleDirectionPoint.x = _x;
+                possibleDirectionPoint.y = _y;
+                
+                [_possibleDirectionDeltas addObject: [NSValue valueWithBytes: &possibleDirectionPoint objCType: @encode(FixedPoint)]];
+            }
+        }
+    }
+    
+    return self;
+}
+
 - (void) act {
-
-    int rows = [self.world rows];
-    int columns = [self.world columns];
-
+    
+    [_possibleDirectionDeltas shuffle];
+    NSUInteger rows = [self.world rows];
+    NSUInteger columns = [self.world columns];
+    
+    NSUInteger i = 0;
+    BOOL found = NO;
+    
     do {
-        int _x = (arc4random() % 3);
-        int _y = (arc4random() % 3);
-
-        NSLog(@"%i,%i", _x - 1, _y - 1);
-
-
-        self.x += _x - 1;
-        self.y += _y - 1;
-
-        //Straight forward mod doesn't work with negative numbers
-        self.x %= rows; if(self.x < 0) self.x += rows;
-        self.y %= columns; if(self.y < 0) self.y += columns;
-
-    } while([self.world isLocationOccupiedInLayer: self.layer atX: self.x atY: self.y]);
+        
+        NSInteger _x = self.x;
+        NSInteger _y = self.y;
+        
+        struct FixedPoint point;
+        [[_possibleDirectionDeltas objectAtIndex: i] getValue: &point];
+        
+        _x += point.x;
+        _y += point.y;
+        
+        _x %= columns; if(_x < 0) _x += columns;
+        _y %= rows; if(_y < 0) _y += rows;
+        
+        found = ([self.world isLocationOccupiedInLayer: self.layer atX: _x atY: _y] == NO);
+        
+        if(found) {
+            self.x = _x;
+            self.y = _y;
+        }
+        
+        i++;
+        
+    } while(!found && i < [_possibleDirectionDeltas count]);
 }
 
 @end
